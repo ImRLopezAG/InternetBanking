@@ -8,5 +8,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITBanking.Core.Application\ITBanking.Core.Application.csproj" />
+    <ProjectReference Include="..\ITBanking.Core.Domain\ITBanking.Core.Domain.csproj" />
+    <ProjectReference Include="..\ITBanking.Infrastructure.Identity\ITBanking.Infrastructure.Identity.csproj" />
+    <ProjectReference Include="..\ITBanking.Infrastructure.Persistence\ITBanking.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\ITBanking.Infrastructure.Shared\ITBanking.Infrastructure.Shared.csproj" />
+  </ItemGroup>
 
 </Project>

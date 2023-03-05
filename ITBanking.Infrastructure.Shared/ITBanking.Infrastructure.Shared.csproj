@@ -10,5 +10,9 @@
     <PackageReference Include="MailKit" Version="3.6.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITBanking.Core.Application\ITBanking.Core.Application.csproj" />
+    <ProjectReference Include="..\ITBanking.Core.Domain\ITBanking.Core.Domain.csproj" />
+  </ItemGroup>
 
 </Project>
