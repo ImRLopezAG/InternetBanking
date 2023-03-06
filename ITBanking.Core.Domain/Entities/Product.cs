@@ -7,4 +7,6 @@ public class Product : BaseProductEntity {
   public string? Card { get; set; }
   public string Type { get; set; } = null!;
   public bool IsPrincipal { get; set; }
+  public string UserId { get; set; } = null!;
+
 }
