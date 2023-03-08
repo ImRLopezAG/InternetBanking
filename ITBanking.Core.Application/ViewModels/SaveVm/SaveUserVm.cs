@@ -16,9 +16,6 @@ public class SaveUserVm : SavePersonVm {
   [Compare("Password", ErrorMessage = "Password and Confirm Password must match")]
   [DataType(DataType.Password)]
   public string ConfirmPassword { get; set; } = null!;
-  [DataType(DataType.Upload)]
-  public IFormFile? ImageFile { get; set; } = null!;
-  public string? Image { get; set; }
-  public bool? IsConfirmed { get; set; }
-
+  public bool HasError { get; set; }
+  public string? Error { get; set; }
 }

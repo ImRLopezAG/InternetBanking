@@ -1,7 +1,7 @@
 namespace ITBanking.Core.Application.Helpers;
 
 public static class EmailRequests {
-  public static string ConfirmEmail(int userId, string name, string lastName) {
+  public static string ConfirmEmail(string name, string lastName, string verificationUri) {
     string body = $@"
     <section
                     style='
@@ -40,7 +40,7 @@ public static class EmailRequests {
                           background: linear-gradient(to right, #413874 0%, #6375db 100%);
                           transition: 0.5s;
                         'transition: 0.5s;                        
-                        href='https://localhost:7296/User/Confirm/{userId}'
+                        href='{verificationUri}'
                         >confirm your user</a
                       >
                     </div>
@@ -50,7 +50,7 @@ public static class EmailRequests {
     return body;
   }
 
-  public static string ResetPassword(string userName, string newPassword) {
+  public static string ResetPassword(string userName, string verificationUri) {
     string body = $@"
     <section
                     style='
@@ -70,30 +70,31 @@ public static class EmailRequests {
                     />
                     <div style='padding: 0 1.2rem'>
                       <p style='font-size: 1rem; color: #ffffff;'>
-                        Your password has been updated successfully
+                        Hi:<span style='color: #3789e7; font-weight: 500'> {userName}</span> you have requested to reset your password
                       </p>
-                      <p style='font-weight: 600; font-size: 1rem; color: #ffffff'>New password: <span style='color: #3789e7;' >{newPassword}</span> </p>
                       <div
-                        style='display: flex; justify-content: center; align-items: center'
+                      style='display: flex; justify-content: center; align-items: center'
+                    >
+                      <a
+                        style='
+                          display: block;
+                          width: 100%;
+                          padding: 0.8rem;
+                          border-radius: 5px;
+                          text-decoration: none;
+                          text-align: center;
+                          color: #fff;
+                          font-size: 1.8rem;
+                          font-weight: 600;
+                          background: linear-gradient(to right, #413874 0%, #6375db 100%);
+                          transition: 0.5s;
+                        'transition: 0.5s;                        
+                        href='{verificationUri}'
+                        >Reset your password</a
                       >
-                        <a
-                          style='
-                            display: block;
-                            width: 100%;
-                            padding: 0.8rem;
-                            border-radius: 5px;
-                            text-decoration: none;
-                            text-align: center;
-                            color: #fff;
-                            font-size: 1.8rem;
-                            font-weight: 550;
-                            background: linear-gradient(to right, #413874 0%, #6375db 100%);
-                            transition: 0.5s;
-                          '
-                          href='https://localhost:7296/login'>Go to the Login</a>
-                      </div>
                     </div>
-                  </section>
+                  </div>
+                </section>
     ";
     return body;
   }

@@ -1,3 +1,4 @@
+using ITBanking.Core.Application.Core.Models;
 using ITBanking.Core.Application.Core;
 using ITBanking.Core.Domain.Core;
 
