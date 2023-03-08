@@ -11,7 +11,7 @@ public class IdentityContext : IdentityDbContext<ApplicationUser> {
   protected override void OnModelCreating(ModelBuilder modelBuilder) {
     //FLUENT API
     base.OnModelCreating(modelBuilder);
-    modelBuilder.HasDefaultSchema("Identity");
+    modelBuilder.HasDefaultSchema("Idt");
 
     modelBuilder.Entity<ApplicationUser>(entity => {
       entity.ToTable(name: "Users");

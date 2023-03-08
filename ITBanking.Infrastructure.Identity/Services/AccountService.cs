@@ -2,6 +2,7 @@
 using ITBanking.Core.Application.Dtos;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Enums;
+using ITBanking.Core.Application.Helpers;
 using ITBanking.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -89,7 +90,7 @@ public class AccountService : IAccountService {
       var verificationUri = await SendVerificationEmailUri(user, origin);
       await _emailService.SendEmail(new EmailRequest() {
         To = user.Email,
-        Body = $"Please confirm your account visiting this URL {verificationUri}",
+        Body =EmailRequests.ConfirmEmail(user.FirstName, user.LastName, verificationUri),
         Subject = "Confirm registration"
       });
     } else {
@@ -133,7 +134,7 @@ public class AccountService : IAccountService {
 
     await _emailService.SendEmail(new EmailRequest() {
       To = user.Email,
-      Body = $"Please reset your account visiting this URL {verificationUri}",
+      Body = EmailRequests.ResetPassword(user.UserName, verificationUri),
       Subject = "reset password"
     });
 

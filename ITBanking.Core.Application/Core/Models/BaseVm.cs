@@ -1,4 +1,4 @@
-namespace ITBanking.Core.Application.Core;
+namespace ITBanking.Core.Application.Core.Models;
 
 public class BaseVm {
   public int Id { get; set; }
