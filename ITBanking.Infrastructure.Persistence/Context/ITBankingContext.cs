@@ -46,5 +46,23 @@ public class ITBankingContext : DbContext {
         modelBuilder.Entity<Product>().Property(x => x.Id).UseIdentityColumn(1, 1);
         modelBuilder.Entity<Card>().Property(x => x.Id).UseIdentityColumn(1, 1);
         #endregion
+
+        #region Relations
+        modelBuilder.Entity<Beneficiary>()
+          .HasOne(x => x.Product)
+          .WithMany(x => x.Beneficiaries)
+          .HasForeignKey(x => x.ProductId);
+
+        modelBuilder.Entity<Payment>()
+          .HasOne(x => x.Product)
+          .WithMany(x => x.Payments)
+          .HasForeignKey(x => x.ProductId);
+
+        modelBuilder.Entity<Product>()
+          .HasOne(x => x.Card)
+          .WithOne(x => x.Product)
+          .HasForeignKey<Card>(x => x.ProductId);
+
+        #endregion
     }
 }

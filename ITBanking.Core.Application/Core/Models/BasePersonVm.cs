@@ -1,5 +1,5 @@
 
-namespace ITBanking.Core.Application.Core;
+namespace ITBanking.Core.Application.Core.Models;
 
 public class BasePersonVm : BaseVm {
   public string FirstName { get; set; } = null!;

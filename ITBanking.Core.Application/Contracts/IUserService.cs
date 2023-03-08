@@ -5,5 +5,5 @@ using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Contracts;
 
-public interface IUserService : IGenericService<UserVm, SaveUserVm, User> {
+public interface IUserService {
 }

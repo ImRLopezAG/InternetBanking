@@ -1,3 +1,4 @@
+using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels;
 
@@ -11,7 +12,7 @@ public class ValidateSessions {
   }
 
   public bool HasUser() {
-    UserVm userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserVm>("user");
+    AuthenticationResponse userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
     return userViewModel != null;
   }
 }
