@@ -97,12 +97,15 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("RProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReceptorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SenderId")
                         .IsRequired()
@@ -110,7 +113,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("RProductId");
+
+                    b.HasIndex("SProductId");
 
                     b.ToTable("Payments", (string)null);
                 });
@@ -176,13 +181,21 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
-                        .WithMany("Payments")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "RProduct")
+                        .WithMany("RPayments")
+                        .HasForeignKey("RProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "SProduct")
+                        .WithMany("SPayments")
+                        .HasForeignKey("SProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("RProduct");
+
+                    b.Navigation("SProduct");
                 });
 
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b =>
@@ -191,7 +204,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Card");
 
-                    b.Navigation("Payments");
+                    b.Navigation("RPayments");
+
+                    b.Navigation("SPayments");
                 });
 #pragma warning restore 612, 618
         }

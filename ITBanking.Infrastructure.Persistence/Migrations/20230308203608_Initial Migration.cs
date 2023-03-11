@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ITBanking.Infrastructure.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,7 +81,8 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReceptorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SenderId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    RProductId = table.Column<int>(type: "int", nullable: false),
+                    SProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false)
@@ -90,11 +91,16 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_Payments_Products_RProductId",
+                        column: x => x.RProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Payments_Products_SProductId",
+                        column: x => x.SProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -109,9 +115,14 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_ProductId",
+                name: "IX_Payments_RProductId",
                 table: "Payments",
-                column: "ProductId");
+                column: "RProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_SProductId",
+                table: "Payments",
+                column: "SProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
