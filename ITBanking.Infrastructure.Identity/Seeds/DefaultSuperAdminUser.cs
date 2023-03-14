@@ -6,12 +6,13 @@ namespace ITBanking.Infrastructure.Identity.Seeds;
 public static class DefaultSuperAdminUser {
   public static async Task SeedAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) {
     ApplicationUser defaultUser = new() {
-      UserName = "superAdminser",
-      Email = "superadminuser@email.com",
+      UserName = "superAdminUser",
+      Email = "super@email.com",
       FirstName = "John",
       LastName = "Doe",
       EmailConfirmed = true,
-      PhoneNumberConfirmed = true
+      PhoneNumberConfirmed = true,
+      DNI = "superAdminUser"
     };
 
     if (userManager.Users.All(u => u.Id != defaultUser.Id)) {

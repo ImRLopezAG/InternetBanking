@@ -13,8 +13,8 @@ public class SavePersonVm : BaseVm
   public string LastName { get; set; } = null!;
   [Required(ErrorMessage = "Email is required")]
   public string Email { get; set; } = null!;
-  [Required(ErrorMessage = "Phone is required")]
-  public string Phone { get; set; } = null!;
+  [Required(ErrorMessage = "PhoneNumber is required")]
+  public string PhoneNumber { get; set; } = null!;
 
   public string DNI { get; set; } = null!;
 

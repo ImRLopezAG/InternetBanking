@@ -60,6 +60,14 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Cvv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Expiration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("HasLimit")
                         .HasColumnType("bit");
 
@@ -71,6 +79,10 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -128,9 +140,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -143,6 +152,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Property<string>("NAccountId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TyAccountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
