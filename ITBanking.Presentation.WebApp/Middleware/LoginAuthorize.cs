@@ -16,7 +16,6 @@ namespace ITBanking.Presentation.Middleware {
         context.Result = controller.RedirectToAction("Index", "Home");
       } else
         await next();
-
     }
   }
 }

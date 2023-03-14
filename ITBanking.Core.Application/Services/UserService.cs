@@ -2,7 +2,6 @@ using AutoMapper;
 using ITBanking.Core.Application.Contracts;
 using ITBanking.Core.Application.Core;
 using ITBanking.Core.Application.Dtos.Account;
-using ITBanking.Core.Application.Interfaces;
 using ITBanking.Core.Application.ViewModels.User;
 using ITBanking.Core.Application.ViewModels.SaveVm;
 using ITBanking.Core.Domain.Entities;
@@ -25,25 +24,21 @@ public class UserService : IUserService
     _mapper = mapper;
   }
 
-  public async Task<AuthenticationResponse> LoginAsync(LoginVm vm)
-  {
+  public async Task<AuthenticationResponse> LoginAsync(LoginVm vm){
     AuthenticationRequest loginRequest = _mapper.Map<AuthenticationRequest>(vm);
     AuthenticationResponse userResponse = await _accountService.AuthenticateAsync(loginRequest);
     return userResponse;
   }
-  public async Task SignOutAsync()
-  {
+  public async Task SignOutAsync(){
     await _accountService.SignOutAsync();
   }
 
-  public async Task<RegisterResponse> RegisterAsync(SaveUserVm vm, string origin)
-  {
+  public async Task<RegisterResponse> RegisterAsync(SaveUserVm vm, string origin){
     RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
     return await _accountService.RegisterBasicUserAsync(registerRequest, origin);
   }
 
-  public async Task<string> ConfirmEmailAsync(string userId, string token)
-  {
+  public async Task<string> ConfirmEmailAsync(string userId, string token){
     return await _accountService.ConfirmAccountAsync(userId, token);
   }
 

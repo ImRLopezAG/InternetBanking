@@ -5,8 +5,8 @@ using ITBanking.Core.Application.ViewModels.User;
 
 namespace ITBanking.Core.Application.Mapping;
 
-public class UserProfile : Profile {
-  public UserProfile() {
+public class UserProfile : Profile{
+  public UserProfile(){
 
     CreateMap<AuthenticationRequest, LoginVm>()
         .ForMember(model => model.HasError, opt => opt.Ignore())

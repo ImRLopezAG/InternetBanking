@@ -1,6 +1,6 @@
 namespace ITBanking.Core.Application.Enums;
 
-public enum Card {
+public enum CardType{
   Debit,
   Credit,
   Prepaid
