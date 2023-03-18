@@ -1,4 +1,5 @@
-﻿using ITBanking.Core.Application.Dtos.Account;
+﻿using ITBanking.Core.Application.Core;
+using ITBanking.Core.Application.Dtos.Account;
 
 namespace ITBanking.Core.Application.Contracts;
 
@@ -9,4 +10,7 @@ public interface IAccountService {
   Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin);
   Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
   Task SignOutAsync();
+
+  IEnumerable<AccountDto> GetAll();
+  Task<AccountDto> GetById(string id);
 }

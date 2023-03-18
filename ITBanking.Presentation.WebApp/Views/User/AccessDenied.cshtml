@@ -1,0 +1,20 @@
+﻿@using ITBanking.Core.Application.ViewModels.User
+@model string
+@{
+  ViewData["Title"] = "access denied";
+}
+
+<div class="row mt-5">
+  <div class="col-6 offset-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Access Denied!</strong> You are not authorized to access this page.
+          <a href="~/">Go back to home page</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 using ITBanking.Core.Application.Core;
+using ITBanking.Core.Application.Interfaces;
 using ITBanking.Infrastructure.Persistence.Context;
 using ITBanking.Infrastructure.Persistence.Core;
+using ITBanking.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,10 @@ namespace ITBanking.Infrastructure.Persistence {
       #endregion
       #region Repositories
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+      services.AddScoped<IPaymentRepository, PaymentRepository>();
+      services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
+      services.AddScoped<ICardRepository, CardRepository>();
+      services.AddScoped<IProductRepository, ProductRepository>();
       #endregion
     }
   }

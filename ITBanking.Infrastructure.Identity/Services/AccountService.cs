@@ -4,6 +4,7 @@ using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Enums;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Infrastructure.Identity.Entities;
+using ITBanking.Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
@@ -13,11 +14,13 @@ public class AccountService : IAccountService {
   private readonly UserManager<ApplicationUser> _userManager;
   private readonly SignInManager<ApplicationUser> _signInManager;
   private readonly IEmailService _emailService;
+  private readonly IRequestService _requestService;
 
-  public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService) {
+  public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, IRequestService requestService) {
     _userManager = userManager;
     _signInManager = signInManager;
     _emailService = emailService;
+    _requestService = requestService;
   }
 
   public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request) {
@@ -81,24 +84,29 @@ public class AccountService : IAccountService {
       Email = request.Email,
       FirstName = request.FirstName,
       LastName = request.LastName,
-      UserName = request.UserName
+      UserName = request.UserName,
+      DNI = request.DNI,
+      PhoneNumber = request.PhoneNumber,  
+      EmailConfirmed = true,
     };
 
     var result = await _userManager.CreateAsync(user, request.Password);
     if (result.Succeeded) {
       await _userManager.AddToRoleAsync(user, Roles.Basic.ToString());
-      var verificationUri = await SendVerificationEmailUri(user, origin);
+      var verificationUri = await _requestService.SendVerificationEmail(user, origin);
       await _emailService.SendEmail(new EmailRequest() {
         To = user.Email,
         Body =EmailRequests.ConfirmEmail(user.FirstName, user.LastName, verificationUri),
         Subject = "Confirm registration"
       });
+      
+      response.UserId = user.Id;
+
     } else {
       response.HasError = true;
       response.Error = $"An error occurred trying to register the user.";
       return response;
     }
-
     return response;
   }
 
@@ -130,7 +138,7 @@ public class AccountService : IAccountService {
       return response;
     }
 
-    var verificationUri = await SendForgotPasswordUri(user, origin);
+    var verificationUri =await _requestService.SendForgotPassword(user, origin);
 
     await _emailService.SendEmail(new EmailRequest() {
       To = user.Email,
@@ -166,24 +174,42 @@ public class AccountService : IAccountService {
 
     return response;
   }
-  private async Task<string> SendVerificationEmailUri(ApplicationUser user, string origin) {
-    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-    var route = "User/ConfirmEmail";
-    var Uri = new Uri(string.Concat($"{origin}/", route));
-    var verificationUri = QueryHelpers.AddQueryString(Uri.ToString(), "userId", user.Id);
-    verificationUri = QueryHelpers.AddQueryString(verificationUri, "token", code);
 
-    return verificationUri;
+  public async Task<string> GetName (string id){
+    var user = await _userManager.FindByIdAsync(id);
+    return user.FirstName + " " + user.LastName;
   }
-  private async Task<string> SendForgotPasswordUri(ApplicationUser user, string origin) {
-    var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-    var route = "User/ResetPassword";
-    var Uri = new Uri(string.Concat($"{origin}/", route));
-    var verificationUri = QueryHelpers.AddQueryString(Uri.ToString(), "token", code);
 
-    return verificationUri;
+  public IEnumerable<AccountDto> GetAll()
+  {
+    var accounts = _userManager.Users.AsEnumerable();
+
+    var query = accounts.Select(x => new AccountDto
+    {
+      Id = x.Id,
+      Email = x.Email,
+      UserName = x.UserName,
+      FullName = x.FirstName + " " + x.LastName,
+      DNI = x.DNI,
+    });
+
+    return query;
+  }
+
+  public async Task<AccountDto> GetById(string id)
+  {
+    var account = await _userManager.FindByIdAsync(id);
+
+    var query = new AccountDto
+    {
+      Id = account.Id,
+      Email = account.Email,
+      UserName = account.UserName,
+      FullName = account.FirstName + " " + account.LastName,
+      DNI = account.DNI,
+    };
+
+    return query;
   }
 }
 

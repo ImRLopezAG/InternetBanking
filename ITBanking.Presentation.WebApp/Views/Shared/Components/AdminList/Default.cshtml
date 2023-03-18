@@ -1,0 +1,36 @@
+@using ITBanking.Core.Application.ViewModels
+@model IEnumerable<PaymentVm>
+
+<div class="row">
+  <table class="table table-dark table-striped table-hover">
+    <thead>
+      <tr>
+        <th>
+          Sender
+        </th>
+        <th>
+          Receptor
+        </th>
+        <th>
+          Amount
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr class="tr-success">
+          <td>
+            @Html.DisplayFor(modelItem => item.SProductId)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.RProductId)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

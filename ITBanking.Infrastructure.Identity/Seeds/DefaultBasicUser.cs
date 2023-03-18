@@ -7,11 +7,12 @@ public static class DefaultBasicUser {
   public static async Task SeedAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) {
     ApplicationUser defaultUser = new() {
       UserName = "basicUser",
-      Email = "basicuser@email.com",
+      Email = "basic@email.com",
       FirstName = "John",
       LastName = "Doe",
       EmailConfirmed = true,
-      PhoneNumberConfirmed = true
+      PhoneNumberConfirmed = true,
+      DNI = "basicUser"
     };
 
     if (userManager.Users.All(u => u.Id != defaultUser.Id)) {

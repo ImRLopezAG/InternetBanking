@@ -1,0 +1,42 @@
+@using ITBanking.Core.Application.ViewModels
+@model IEnumerable<ProductVm>
+
+<div class="row">
+  <table class="table table-dark table-striped table-hover">
+    <thead>
+      <tr>
+        <th>
+          Principal
+        </th>
+        <th>
+          Product
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+          Amount
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr class="tr-success">
+          <td>
+            @Html.DisplayFor(modelItem => item.IsPrincipal)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Type)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Card.Amount)
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

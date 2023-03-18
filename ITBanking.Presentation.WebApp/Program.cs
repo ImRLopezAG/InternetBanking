@@ -4,6 +4,7 @@ using ITBanking.Infrastructure.Identity.Entities;
 using ITBanking.Infrastructure.Identity.Seeds;
 using ITBanking.Infrastructure.Persistence;
 using ITBanking.Infrastructure.Shared;
+using ITBanking.Presentation.Middleware;
 using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,33 +15,31 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddSharedInfrastructure(builder.Configuration);
-builder.Services.AddApplicationServices();
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddScoped<LoginAuthorize>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ValidateSessions, ValidateSessions>();
 
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+using (var scope = app.Services.CreateScope()) {
+  var services = scope.ServiceProvider;
 
-    try
-    {
+  try {
 
-        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-        await DefaultRoles.SeedAsync(userManager, roleManager);
-        await DefaultBasicUser.SeedAsync(userManager, roleManager);
-        await DefaultSuperAdminUser.SeedAsync(userManager, roleManager);
+    await DefaultRoles.SeedAsync(userManager, roleManager);
+    await DefaultBasicUser.SeedAsync(userManager, roleManager);
+    await DefaultAdminUser.SeedAsync(userManager, roleManager);
+    await DefaultSuperAdminUser.SeedAsync(userManager, roleManager);
 
-    }
-    catch
-    {
-        throw;
-    }
+  } catch {
+    throw;
+  }
 }
 
 // Configure the HTTP request pipeline.
@@ -60,6 +59,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Index}/{id?}");
 
 app.Run();
