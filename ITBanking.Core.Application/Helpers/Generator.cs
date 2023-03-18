@@ -1,29 +1,29 @@
 namespace ITBanking.Core.Application.Helpers;
-public static class Card{
+public static class Generate{
   private static readonly Random random = new Random();
 
-  public static string GenCardNumber(){
+  public static string CardNumber(){
     var cardNumber = new char[16].Select(x => random.Next(0, 10).ToString()[0]).ToArray();
     
-    while(GenCardProvider(new string(cardNumber)) == "Unknown")
+    while(CardProvider(new string(cardNumber)) == "Unknown")
       cardNumber = new char[16].Select(x => random.Next(0, 10).ToString()[0]).ToArray();
     
 
     return FormatCardNumber(new string(cardNumber));
   }
 
-  public static string GenCardPin()=> random.Next(100000000, 999999999).ToString();
-  public static string GenCardCvv() => random.Next(200, 999).ToString();
+  public static string Pin()=> random.Next(100000000, 999999999).ToString();
+  public static string CardCvv() => random.Next(200, 999).ToString();
 
 
-  public static string GenCardExpiryDate(){
+  public static string CardExpiryDate(){
     int month = random.Next(1, 13);
     int year = random.Next(25, 40);
 
     return month.ToString("D2") + '/' + year.ToString();
   }
 
-  public static string GenCardProvider(string cardNumber){
+  public static string CardProvider(string cardNumber){
     if (cardNumber.Substring(0, 2) == "34" || cardNumber.Substring(0, 2) == "37")
       return "American Express";
     

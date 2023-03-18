@@ -69,5 +69,12 @@ public class ITBankingContext : DbContext {
       .HasForeignKey<Card>(x => x.ProductId);
     #endregion
 
+    #region Configuration
+    
+    modelBuilder.Entity<Card>().HasIndex(x => x.CardNumber).IsUnique();
+    modelBuilder.Entity<Product>().HasIndex(x => x.AccountNumber).IsUnique();
+
+    #endregion
+
   }
 }

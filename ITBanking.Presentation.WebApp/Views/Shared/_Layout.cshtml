@@ -1,10 +1,9 @@
-﻿@using ITBanking.Infrastructure.Identity.Entities
+﻿@using ITBanking.Core.Application.Dtos.Account
 @using Microsoft.AspNetCore.Http;
 @using ITBanking.Core.Application.Helpers;
-@using ITBanking.Core.Application.ViewModels;
 @inject IHttpContextAccessor _httpContext;
 @{
-  ApplicationUser user = _httpContext.HttpContext.Session.Get<ApplicationUser>("user");
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -32,12 +31,12 @@
             @if (user != null)
             {
               <div class="d-flex flex-row gap-3 align-items-center">
-                <span class="text-white"><i class="bi bi-at"></i> @user.UserName</span>
+                <h5 class="text-white"><i class="bi bi-at"></i>@user.UserName</h5>
               </div>
             }
             else
             {
-              @("ITBanking App")
+              <h4 class="text-white">ITBanking</h4>
             }
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
@@ -46,13 +45,7 @@
             {
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" asp-action="Index" asp-controller="Beneficiary">Beneficiaries</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" asp-action="Index" asp-controller="Beneficiary">Cash advance</a>
+                  <a class="nav-link active" asp-action="Index" asp-controller="Home">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -62,37 +55,46 @@
                   <ul class="dropdown-menu">
                     <li>
                       <a class="dropdown-item" asp-action="Edit" asp-controller="Payment" asp-route-id="@user.Id">
-                        Express 
+                        Express
                       </a>
                     </li>
                     <li>
                       <a class="dropdown-item" asp-action="Edit" asp-controller="Payment" asp-route-id="@user.Id">
-                        Credit Card 
+                        Credit Card
                       </a>
                     </li>
                     <hr class="dropdown-divider">
                     <li>
                       <a class="dropdown-item" asp-action="Edit" asp-controller="Payment" asp-route-id="@user.Id">
-                        Loan 
+                        Loan
                       </a>
                     </li>
                     <li>
                       <a class="dropdown-item" asp-action="Edit" asp-controller="Payment" asp-route-id="@user.Id">
-                        Beneficiary 
+                        Beneficiary
                       </a>
                     </li>
                   </ul>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link"   asp-action="Index" asp-controller="Beneficiary">Beneficiaries</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"   asp-action="Index" asp-controller="Beneficiary">Cash advance</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active"  asp-action="Index" asp-controller="Transfer">Transfer</a>
+                </li>
               </ul>
             }
-            <div class="d-flex">
+            <div class="d-flex flex-column">
               @if (user != null)
               {
                 <a class="btn btn-outline-danger mt-3" asp-action="Logout" asp-controller="User">Logout</a>
               }
               else
               {
-                <div class="grid gap-3">
+                <div class="">
                   <a class="btn btn-outline-primary " asp-action="Index" asp-controller="User">Login</a>
                   <a class="btn btn-outline-primary" asp-action="Create" asp-controller="User">Register</a>
                 </div>
@@ -114,4 +116,5 @@
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

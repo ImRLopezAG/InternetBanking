@@ -1,0 +1,26 @@
+@using ITBanking.Core.Application.ViewModels
+@model BeneficiaryVm
+
+@{
+  ViewData["Title"] = "Beneficiary";
+}
+
+<div class="row">
+  <h1>Beneficiaries</h1>
+
+  <div class="float-end">
+    <form asp-action="Add" class="d-flex col-md-4  mb-3">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="col-auto me-2">
+        <input class="form-control" type="search" placeholder="Account Number" asp-for="AccountNumber">
+      </div>
+      <div class="col-auto">
+       <input type="submit" value="Add" class="btn btn-outline-primary" />
+      </div>
+    </form>
+  </div>
+  <hr/>
+  <div>
+    @await Component.InvokeAsync("Beneficiary")
+  </div>
+</div>

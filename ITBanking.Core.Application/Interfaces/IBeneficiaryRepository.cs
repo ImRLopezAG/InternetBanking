@@ -9,5 +9,4 @@ namespace ITBanking.Core.Application.Interfaces;
 
 public interface IBeneficiaryRepository: IGenericRepository<Beneficiary>
 {
-    
 }

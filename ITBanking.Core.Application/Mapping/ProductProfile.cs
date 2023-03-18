@@ -21,6 +21,7 @@ public class ProductProfile: Profile
       .ForMember(ent => ent.Beneficiaries, opt => opt.Ignore());
 
     CreateMap<Product, ProductVm>()
+      .ForMember(vm => vm.Card, opt => opt.Ignore())
       .ReverseMap()
       .ForMember(ent => ent.SPayments, opt => opt.Ignore())
       .ForMember(ent => ent.RPayments, opt => opt.Ignore())

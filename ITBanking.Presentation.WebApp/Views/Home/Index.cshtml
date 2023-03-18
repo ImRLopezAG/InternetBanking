@@ -1,8 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@{
+  ViewData["Title"] = "Home Page";
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+  var isAdmin = user.Roles.Where(x => x.ToString() == "Admin").Any();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-start">
+  <h1 class="display-4 mb-3">Welcome @user.UserName</h1>
+  <hr>
+  @if(isAdmin){
+    @await Component.InvokeAsync("AdminList")
+  }else{
+    @await Component.InvokeAsync("Product")
+  }
 </div>

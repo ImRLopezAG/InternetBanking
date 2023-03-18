@@ -1,4 +1,5 @@
 using ITBanking.Core.Application.Contracts.Core;
+using ITBanking.Core.Application.Core;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.ViewModels;
 using ITBanking.Core.Application.ViewModels.SaveVm;
@@ -14,4 +15,8 @@ public interface IUserService{
   Task<RegisterResponse> RegisterAsync(SaveUserVm vm, string origin);
   Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordVm vm);
   Task SignOutAsync();
+
+  IEnumerable<AccountDto> GetAll();
+  Task<AccountDto> GetById(string id);
 }
+

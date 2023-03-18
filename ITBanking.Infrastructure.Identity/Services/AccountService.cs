@@ -87,7 +87,7 @@ public class AccountService : IAccountService {
       UserName = request.UserName,
       DNI = request.DNI,
       PhoneNumber = request.PhoneNumber,  
-      EmailConfirmed = false,
+      EmailConfirmed = true,
     };
 
     var result = await _userManager.CreateAsync(user, request.Password);
@@ -99,12 +99,14 @@ public class AccountService : IAccountService {
         Body =EmailRequests.ConfirmEmail(user.FirstName, user.LastName, verificationUri),
         Subject = "Confirm registration"
       });
+      
+      response.UserId = user.Id;
+
     } else {
       response.HasError = true;
       response.Error = $"An error occurred trying to register the user.";
       return response;
     }
-
     return response;
   }
 
@@ -172,7 +174,43 @@ public class AccountService : IAccountService {
 
     return response;
   }
-  
+
+  public async Task<string> GetName (string id){
+    var user = await _userManager.FindByIdAsync(id);
+    return user.FirstName + " " + user.LastName;
+  }
+
+  public IEnumerable<AccountDto> GetAll()
+  {
+    var accounts = _userManager.Users.AsEnumerable();
+
+    var query = accounts.Select(x => new AccountDto
+    {
+      Id = x.Id,
+      Email = x.Email,
+      UserName = x.UserName,
+      FullName = x.FirstName + " " + x.LastName,
+      DNI = x.DNI,
+    });
+
+    return query;
+  }
+
+  public async Task<AccountDto> GetById(string id)
+  {
+    var account = await _userManager.FindByIdAsync(id);
+
+    var query = new AccountDto
+    {
+      Id = account.Id,
+      Email = account.Email,
+      UserName = account.UserName,
+      FullName = account.FirstName + " " + account.LastName,
+      DNI = account.DNI,
+    };
+
+    return query;
+  }
 }
 
 
