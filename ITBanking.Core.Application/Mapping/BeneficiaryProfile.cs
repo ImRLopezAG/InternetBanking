@@ -9,14 +9,15 @@ using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Mapping;
 
-public class BeneficiaryProfile: Profile
-{
+public class BeneficiaryProfile: Profile{
   public BeneficiaryProfile(){
     CreateMap<Beneficiary, BeneficiarySaveVm>()
       .ReverseMap()
       .ForMember(ent => ent.Product, opt => opt.Ignore());
 
     CreateMap<Beneficiary, BeneficiaryVm>()
+      .ForMember(model => model.Name, opt => opt.Ignore())
+      .ForMember(model => model.AccountNumber, opt => opt.Ignore())
       .ReverseMap()
       .ForMember(ent => ent.Product, opt => opt.Ignore());
   }

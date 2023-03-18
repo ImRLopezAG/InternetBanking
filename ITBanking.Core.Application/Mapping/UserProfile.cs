@@ -27,5 +27,6 @@ public class UserProfile : Profile{
         .ForMember(model => model.HasError, opt => opt.Ignore())
         .ForMember(model => model.Error, opt => opt.Ignore())
         .ReverseMap();
+
   }
 }

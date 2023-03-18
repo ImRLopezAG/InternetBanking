@@ -1,6 +1,7 @@
 namespace ITBanking.Core.Application.Enums;
 
 public enum AccountType{
-  PersonalCurrent,
-  PersonalSavings
+  PersonalSavings =1,
+  PersonalCredits=2,
+  Loans=3
 }

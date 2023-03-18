@@ -9,7 +9,6 @@ using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Contracts;
 
-public interface IProductService: IGenericService<ProductVm, ProductSaveVm, Product>
-{
-    
+public interface IProductService: IGenericService<ProductVm, ProductSaveVm, Product>{
+  Task<ProductVm> GetAccount(string accountNumber);
 }

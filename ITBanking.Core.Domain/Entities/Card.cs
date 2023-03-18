@@ -8,6 +8,10 @@ public class Card : BaseProductEntity{
   public string Expiration { get; set; } = null!;
   public string Cvv { get; set; } = null!;
   public string Provider { get; set; } = null!;
+  public string CardNumber { get; set; } = null!;
+  public int TypeId { get; set; }
+  public string UserId { get; set; } = null!;
+
   // Navigation properties
   public int ProductId { get; set; }
 

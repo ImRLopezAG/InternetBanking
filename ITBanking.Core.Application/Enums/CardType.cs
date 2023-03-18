@@ -1,7 +1,7 @@
 namespace ITBanking.Core.Application.Enums;
 
 public enum CardType{
-  Debit,
-  Credit,
-  Prepaid
+  Debit = 1,
+  Credit = 2,
+  Prepaid = 3
 }

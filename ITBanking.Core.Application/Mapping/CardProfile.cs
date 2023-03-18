@@ -17,6 +17,7 @@ public class CardProfile: Profile
         .ForMember(ent => ent.Product, opt => opt.Ignore());
 
       CreateMap<Card, CardVm>()
+        .ForMember(vm => vm.Type, opt => opt.Ignore())
         .ReverseMap()
         .ForMember(ent => ent.Product, opt => opt.Ignore());
     }

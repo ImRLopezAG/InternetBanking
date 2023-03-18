@@ -6,8 +6,7 @@ using ITBanking.Core.Application.Core;
 using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Interfaces;
-
-public interface ICardRepository: IGenericRepository<Card>
-{
-    
+public interface ICardRepository : IGenericRepository<Card>{
+  Card GenCard();
+  Task<Card> GetByProductId(int product);
 }

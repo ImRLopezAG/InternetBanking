@@ -10,4 +10,5 @@ namespace ITBanking.Core.Application.ViewModels;
 public class PaymentVm: BaseVm{
   public int RProductId { get; set; }
   public int SProductId { get; set; }
+  public double Amount { get; set; }
 }
