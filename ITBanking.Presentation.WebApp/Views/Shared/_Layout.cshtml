@@ -3,7 +3,8 @@
 @using ITBanking.Core.Application.Helpers;
 @inject IHttpContextAccessor _httpContext;
 @{
-  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+  AuthenticationResponse? user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +23,20 @@
     <nav class="navbar navbar-dark bg-dark mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" asp-action="Index" asp-controller="@(user!=null? "Home":"User")">ITBanking</a>
+        @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any())
+        {
+          <ul class="navbar-nav d-flex flex-row gap-3" style="margin-right: 39rem;">
+            <li class="nav-item">
+              <a class="nav-link text" asp-action="Index" asp-controller="">Transfer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text" asp-action="Index" asp-controller="">Payments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text" asp-action="Index" asp-controller="">Products</a>
+          </li>          
+          </ul>
+        }
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
@@ -47,6 +62,7 @@
                 <li class="nav-item">
                   <a class="nav-link active" asp-action="Index" asp-controller="Home">Home</a>
                 </li>
+              @if(!user.Roles.Where(x => x.ToString() == "Admin").Any()){
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -77,14 +93,19 @@
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link"   asp-action="Index" asp-controller="Beneficiary">Beneficiaries</a>
+                  <a class="nav-link" asp-action="Index" asp-controller="Beneficiary">Beneficiaries</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link"   asp-action="Index" asp-controller="Beneficiary">Cash advance</a>
+                  <a class="nav-link" asp-action="Index" asp-controller="Beneficiary">Cash advance</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active"  asp-action="Index" asp-controller="Transfer">Transfer</a>
+                  <a class="nav-link active" asp-action="Index" asp-controller="Transfer">Transfer</a>
                 </li>
+              }else{
+                <li class="nav-item">
+                  <a class="nav-link" asp-action="Index" asp-controller="User">Users</a>
+                </li>
+              }
               </ul>
             }
             <div class="d-flex flex-column">

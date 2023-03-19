@@ -5,13 +5,12 @@
 @{
   ViewData["Title"] = "Home Page";
   AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
-  var isAdmin = user.Roles.Where(x => x.ToString() == "Admin").Any();
 }
 
 <div class="text-start">
   <h1 class="display-4 mb-3">Welcome @user.UserName</h1>
   <hr>
-  @if(isAdmin){
+  @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any()){
     @await Component.InvokeAsync("AdminList")
   }else{
     @await Component.InvokeAsync("Product")

@@ -25,6 +25,7 @@ namespace ITBanking.Infrastructure.Persistence {
       services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
       services.AddScoped<ICardRepository, CardRepository>();
       services.AddScoped<IProductRepository, ProductRepository>();
+      services.AddScoped<ITransferRepository, TransferRepository>();
       #endregion
     }
   }

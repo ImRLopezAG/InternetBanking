@@ -22,7 +22,7 @@
     <tbody>
       @foreach (var item in Model)
       {
-        <tr class="tr-success">
+        <tr class="@item.IsPrincipal ? "text-success" : "text-danger">
           <td>
             @Html.DisplayFor(modelItem => item.IsPrincipal)
           </td>
@@ -33,7 +33,7 @@
             @Html.DisplayFor(modelItem => item.Type)
           </td>
           <td>
-            @Html.DisplayFor(modelItem => item.Card.Amount)
+            @Html.DisplayFor(modelItem => item.Amount)
           </td>
         </tr>
       }

@@ -6,7 +6,7 @@ using ITBanking.Core.Application.Core.Models;
 
 namespace ITBanking.Core.Application.ViewModels;
 
-public class ProductVm: BaseVm{
+public class ProductVm: BaseProductVm{
     public string AccountNumber { get; set; } = null!;
     public string Type { get; set; } = null!;
     public bool IsPrincipal { get; set; }
