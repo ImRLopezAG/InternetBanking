@@ -1,0 +1,67 @@
+﻿@using ITBanking.Core.Application.ViewModels
+@model IEnumerable<TransferVm>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="col-3 offset-9">
+            @Html.ValidationSummary(false,"",new {@class = "text-danger"})
+                <form method="post" asp-action="Index" asp-controller="Transfer">
+                    <div class="d-flex flex-row gap-2 justify-content-around align-items-lg-center">
+                        <div>
+                            <input type="text" class="form-control" placeholder="Account Number" value="" />
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary btn-sm ">Transfer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1 mt-4 border radius">
+                    <table class="table table-striped table-hover text-dark">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Receptor</p>
+                                </th>
+                                <th>
+                                    <p>Account</p>
+
+                                </th>
+                                <th>
+                                    <p>Amount</p>
+
+                                </th>
+                                <th>
+                                    <p>Date</p>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Pedro</p>
+
+                                </td>
+                                <td>
+                                    <p>3832314</p>
+
+                                </td>
+                                <td>
+                                    <p>200.00</p>
+
+                                </td>
+                                <td>
+                                    <p>19-17-23</p>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

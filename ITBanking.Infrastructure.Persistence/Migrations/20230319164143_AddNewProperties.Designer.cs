@@ -4,6 +4,7 @@ using ITBanking.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITBanking.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ITBankingContext))]
-    partial class ITBankingContextModelSnapshot : ModelSnapshot
+    [Migration("20230319164143_AddNewProperties")]
+    partial class AddNewProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -26,11 +26,7 @@ public class ProductService : GenericService<ProductVm, ProductSaveVm, Product>,
     _mapper = mapper;
   }
 
-  public async Task<ProductVm> GetAccount(string accountNumber) {
-    var product = await _productRepository.GetAccount(accountNumber);
-    var query = _mapper.Map<ProductVm>(product);
-    return query;
-  }
+  public async Task<ProductVm> GetAccount(string accountNumber) => _mapper.Map<ProductVm>(await _productRepository.GetAccount(accountNumber));
 
   public async override Task<IEnumerable<ProductVm>> GetAll() {
     var query = from product in await _productRepository.GetAll()

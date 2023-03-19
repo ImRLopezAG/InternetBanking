@@ -2,41 +2,41 @@
 @model IEnumerable<ProductVm>
 
 <div class="row">
-  <table class="table table-dark table-striped table-hover">
-    <thead>
-      <tr>
-        <th>
-          Principal
-        </th>
-        <th>
-          Product
-        </th>
-        <th>
-          @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-          Amount
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var item in Model)
-      {
-        <tr class="@item.IsPrincipal ? "text-success" : "text-danger">
-          <td>
-            @Html.DisplayFor(modelItem => item.IsPrincipal)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.AccountNumber)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.Type)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    <table class="table table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Principal
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    Amount
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@item.IsPrincipal ? " text-success" : "text-danger">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPrincipal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
