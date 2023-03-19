@@ -14,16 +14,30 @@ namespace ITBanking.Presentation.WebApp.Controllers;
 public class TransferController : Controller
 {
   private readonly IPaymentService _paymentService;
-
-  public TransferController(IPaymentService paymentService)
+  private readonly IProductService _productService;
+  public TransferController(IPaymentService paymentService, IProductService productService)
   {
     _paymentService = paymentService;
+    _productService = productService;
   }
 
   public IActionResult Index()
   {
     return View();
   }
+
+  [HttpPost]
+  public async Task<IActionResult> Index(string accountnumber)
+  {
+        var transfer = await _productService.GetAccount(accountnumber);
+        if(transfer == null)
+        {
+                ModelState.AddModelError("NoAccount","No existe una cuenta con ese número de cuenta");
+                return View("Index");
+        }
+        return View("Transfer",transfer);
+  }
+
 
   [HttpPost]
   public async Task<IActionResult> Transfer(PaymentSaveVm model)

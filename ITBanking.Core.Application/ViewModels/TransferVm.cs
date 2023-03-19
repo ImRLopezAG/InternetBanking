@@ -10,4 +10,13 @@ public class TransferVm:BaseVm
 {
   public int RProductId { get; set; }
   public int SProductId { get; set; }
+
+  public string Sender { get; set; } = null!;
+  public string Receptor { get; set; } = null!;
+
+  //Ignore Mapping
+  
+  public string Name { get; set; } = null!;
+
+  public string AcountNumber { get; set; } = null!;
 }
