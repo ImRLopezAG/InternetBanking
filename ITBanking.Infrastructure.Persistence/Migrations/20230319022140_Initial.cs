@@ -20,7 +20,8 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TyAccountId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,8 +67,7 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false)
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,11 +86,11 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RProductId = table.Column<int>(type: "int", nullable: false),
-                    SProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false)
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    RProductId = table.Column<int>(type: "int", nullable: false),
+                    SProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,6 +103,34 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Payments_Products_SProductId",
+                        column: x => x.SProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transfers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    RProductId = table.Column<int>(type: "int", nullable: false),
+                    SProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transfers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transfers_Products_RProductId",
+                        column: x => x.RProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transfers_Products_SProductId",
                         column: x => x.SProductId,
                         principalTable: "Products",
                         principalColumn: "Id");
@@ -140,6 +168,16 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 table: "Products",
                 column: "AccountNumber",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transfers_RProductId",
+                table: "Transfers",
+                column: "RProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transfers_SProductId",
+                table: "Transfers",
+                column: "SProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -152,6 +190,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Transfers");
 
             migrationBuilder.DropTable(
                 name: "Products");

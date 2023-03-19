@@ -33,9 +33,8 @@ public class ProductService : GenericService<ProductVm, ProductSaveVm, Product>,
   }
 
   public async override Task<IEnumerable<ProductVm>> GetAll() {
-    var products = await _productRepository.GetAll().ContinueWith(t => t.Result.Where(x => x.UserId == _currentUser?.Id));
-
-    var query = from product in products
+    var query = from product in await _productRepository.GetAll()
+                where product.UserId == _currentUser?.Id
                 join card in await _cardRepository.GetAll() on product.Id equals card.ProductId
                 select _mapper.Map<ProductVm>(product, opt => opt.AfterMap((src, prd) => {
                   prd.Type = GetEnum.Products(product.TyAccountId);

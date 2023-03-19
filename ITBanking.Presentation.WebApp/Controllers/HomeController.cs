@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
-[Authorize]
+[Authorize(Roles = "Admin, Basic")]
 public class HomeController : Controller
 {
   private readonly ILogger<HomeController> _logger;

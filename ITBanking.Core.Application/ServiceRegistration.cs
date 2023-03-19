@@ -17,6 +17,7 @@ public static class ServiceRegistration {
     services.AddTransient<IProductService, ProductService>();
     services.AddTransient<IPaymentService, PaymentService>();
     services.AddTransient<IBeneficiaryService, BeneficiaryService>();
+    services.AddTransient<ITransferService, TransferService>();
     #endregion
   }
 }

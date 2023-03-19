@@ -62,9 +62,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<string>("CardNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -158,6 +155,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -180,6 +180,38 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Transfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RProductId");
+
+                    b.HasIndex("SProductId");
+
+                    b.ToTable("Transfers", (string)null);
                 });
 
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Beneficiary", b =>
@@ -223,6 +255,25 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Navigation("SProduct");
                 });
 
+            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Transfer", b =>
+                {
+                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "RProduct")
+                        .WithMany("RTransfers")
+                        .HasForeignKey("RProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "SProduct")
+                        .WithMany("STransfers")
+                        .HasForeignKey("SProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("RProduct");
+
+                    b.Navigation("SProduct");
+                });
+
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Beneficiaries");
@@ -231,7 +282,11 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
 
                     b.Navigation("RPayments");
 
+                    b.Navigation("RTransfers");
+
                     b.Navigation("SPayments");
+
+                    b.Navigation("STransfers");
                 });
 #pragma warning restore 612, 618
         }

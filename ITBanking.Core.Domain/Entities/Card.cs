@@ -2,7 +2,7 @@ using ITBanking.Core.Domain.Core;
 
 namespace ITBanking.Core.Domain.Entities;
 
-public class Card : BaseProductEntity{
+public class Card : BaseEntity{
   public bool? HasLimit { get; set; }
   public double? Limit { get; set; }
   public string Expiration { get; set; } = null!;

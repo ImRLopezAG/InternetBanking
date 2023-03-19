@@ -22,6 +22,8 @@ public class ProductProfile: Profile
 
     CreateMap<Product, ProductVm>()
       .ForMember(vm => vm.Card, opt => opt.Ignore())
+      .ForMember(model => model.HasError,opt => opt.Ignore())
+      .ForMember(model => model.Error,opt => opt.Ignore())
       .ReverseMap()
       .ForMember(ent => ent.SPayments, opt => opt.Ignore())
       .ForMember(ent => ent.RPayments, opt => opt.Ignore())

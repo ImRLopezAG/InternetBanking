@@ -7,7 +7,7 @@ using ITBanking.Core.Application.Core.Models;
 
 namespace ITBanking.Core.Application.ViewModels;
 
-public class CardVm: BaseProductVm
+public class CardVm: BaseVm
 {
     public bool? HasLimit { get; set; }
   public double? Limit { get; set; }
