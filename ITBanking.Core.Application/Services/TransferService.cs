@@ -27,7 +27,7 @@ public class TransferService: GenericService<TransferVm, TransferSaveVm, Transfe
 
   public override async Task<IEnumerable<TransferVm>> GetAll()
   {
-    var users = _userService.GetAll();
+    var users = await _userService.GetAll();
     var products = await _productRepository.GetAll();
     var query = from Transfer in await _transferRepository.GetAll()
                     select _mapper.Map<TransferVm>(Transfer, opt => opt.AfterMap((src, trf) =>
@@ -40,7 +40,7 @@ public class TransferService: GenericService<TransferVm, TransferSaveVm, Transfe
 
   public override async Task<TransferVm> GetById(int id)
   {
-    var users = _userService.GetAll();
+    var users =await _userService.GetAll();
     var products = await _productRepository.GetAll();
     var transfer = await _transferRepository.GetEntity(id);
     var query = _mapper.Map<TransferVm>(transfer, opt => opt.AfterMap((src, trf) =>

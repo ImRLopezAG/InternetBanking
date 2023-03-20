@@ -16,7 +16,7 @@ public interface IUserService{
   Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordVm vm);
   Task SignOutAsync();
 
-  IEnumerable<AccountDto> GetAll();
+  Task<IEnumerable<AccountDto>> GetAll();
   Task<AccountDto> GetById(string id);
 }
 

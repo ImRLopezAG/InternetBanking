@@ -192,6 +192,7 @@ public class AccountService : IAccountService {
       FullName = x.FirstName + " " + x.LastName,
       DNI = x.DNI,
       EmailConfirmed = x.EmailConfirmed,
+      Role = _userManager.GetRolesAsync(x).Result.FirstOrDefault()
     });
 
     return query;

@@ -12,7 +12,8 @@ using ITBanking.Core.Application.Enums;
 
 namespace ITBanking.Core.Application.Services;
 
-public class UserService : IUserService{
+public class UserService : IUserService
+{
   private readonly IAccountService _accountService;
   private readonly ICardRepository _cardRepository;
   private readonly IProductRepository _productRepository;
@@ -30,64 +31,78 @@ public class UserService : IUserService{
     _mapper = mapper;
   }
 
-  public async Task<AuthenticationResponse> LoginAsync(LoginVm vm){
-    AuthenticationRequest loginRequest = _mapper.Map<AuthenticationRequest>(vm);
+  public async Task<AuthenticationResponse> LoginAsync(LoginVm model)
+  {
+    AuthenticationRequest loginRequest = _mapper.Map<AuthenticationRequest>(model);
     AuthenticationResponse userResponse = await _accountService.AuthenticateAsync(loginRequest);
     return userResponse;
   }
-  public async Task SignOutAsync(){
+  public async Task SignOutAsync()
+  {
     await _accountService.SignOutAsync();
   }
 
-  public async Task<RegisterResponse> RegisterAsync(SaveUserVm vm, string origin){
-    RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
+  public async Task<RegisterResponse> RegisterAsync(SaveUserVm model, string origin){
+    RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(model);
     var registerResponse = await _accountService.RegisterBasicUserAsync(registerRequest, origin);
-    string pin = Generate.Pin();
+    if (registerResponse.HasError) return registerResponse;
+    if (model.Role != 2){
+      string pin = Generate.Pin();
 
-    Product productToSave = new(){
-      UserId = registerResponse.UserId,
-      AccountNumber = pin,
-      IsPrincipal = true,
-      TyAccountId = 1,      
-    };
+      Product productToSave = new(){
+        UserId = registerResponse.UserId,
+        AccountNumber = pin,
+        IsPrincipal = true,
+        TyAccountId = 1,
+        Amount = (double)model.Amount,
+      };
 
-    var product = await _productRepository.Save(productToSave);
+      var product = await _productRepository.Save(productToSave);
 
-    Card card = _cardRepository.GenCard();
-    card.ProductId = product.Id;
-    card.HasLimit = false;
-    card.TypeId = 1;
-    card.UserId = registerResponse.UserId;
-    
-    await _cardRepository.Save(card);
+      Card card = _cardRepository.GenCard();
+      card.ProductId = product.Id;
+      card.HasLimit = false;
+      card.TypeId = 1;
+      card.UserId = registerResponse.UserId;
+
+      await _cardRepository.Save(card);
+    }
 
     return registerResponse;
   }
 
-  public async Task<string> ConfirmEmailAsync(string userId, string token){
+  public async Task<string> ConfirmEmailAsync(string userId, string token)
+  {
     return await _accountService.ConfirmAccountAsync(userId, token);
   }
 
-  public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordVm vm, string origin)
+  public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordVm model, string origin)
   {
-    ForgotPasswordRequest forgotRequest = _mapper.Map<ForgotPasswordRequest>(vm);
+    ForgotPasswordRequest forgotRequest = _mapper.Map<ForgotPasswordRequest>(model);
     return await _accountService.ForgotPasswordAsync(forgotRequest, origin);
   }
 
-  public async Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordVm vm)
+  public async Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordVm model)
   {
-    ResetPasswordRequest resetRequest = _mapper.Map<ResetPasswordRequest>(vm);
+    ResetPasswordRequest resetRequest = _mapper.Map<ResetPasswordRequest>(model);
     return await _accountService.ResetPasswordAsync(resetRequest);
   }
+  
 
-  public Task<string> GetName(string id)
-  {
-    throw new NotImplementedException();
-  }
-
-  public IEnumerable<AccountDto> GetAll()
-  {
-    var query = _accountService.GetAll();
+  public async Task<IEnumerable<AccountDto>> GetAll(){
+    var products = await _productRepository.GetAll();
+    var query = from user in _accountService.GetAll()
+                join product in products on user.Id equals product.UserId
+                select new AccountDto{
+                  Id = user.Id,
+                  UserName = user.UserName,
+                  Email = user.Email,
+                  FullName = user.FullName,
+                  DNI = user.DNI,
+                  EmailConfirmed = user.EmailConfirmed,
+                  Products = products.Where(x => x.UserId == user.Id).Count(),
+                  Role = user.Role
+                };    
     return query;
   }
 
