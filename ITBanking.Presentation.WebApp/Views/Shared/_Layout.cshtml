@@ -27,13 +27,13 @@
         {
           <ul class="navbar-nav d-flex flex-row gap-3" style="margin-right: 39rem;">
             <li class="nav-item">
-              <a class="nav-link text" asp-action="Index" asp-controller="">Transfer</a>
+              <a class="nav-link text" asp-action="Index" asp-controller="Transfer">Transfers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text" asp-action="Index" asp-controller="">Payments</a>
+              <a class="nav-link text" asp-action="Index" asp-controller="Payment">Payments</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text" asp-action="Index" asp-controller="">Products</a>
+              <a class="nav-link text" asp-action="Index" asp-controller="Product">Products</a>
           </li>          
           </ul>
         }
@@ -103,7 +103,7 @@
                 </li>
               }else{
                 <li class="nav-item">
-                  <a class="nav-link" asp-action="Index" asp-controller="User">Users</a>
+                  <a class="nav-link" asp-action="Index" asp-controller="AdminUser">Users</a>
                 </li>
               }
               </ul>

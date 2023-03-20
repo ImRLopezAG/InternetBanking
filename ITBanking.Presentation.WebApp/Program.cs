@@ -5,6 +5,7 @@ using ITBanking.Infrastructure.Identity.Seeds;
 using ITBanking.Infrastructure.Persistence;
 using ITBanking.Infrastructure.Shared;
 using ITBanking.Presentation.Middleware;
+using ITBanking.Presentation.WebApp.Middleware;
 using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,6 +19,7 @@ builder.Services.AddSharedInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<LoginAuthorize>();
+builder.Services.AddScoped<SaveAuthorize>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ValidateSessions, ValidateSessions>();
 

@@ -1,18 +1,30 @@
 ﻿using ITBanking.Core.Application.Contracts;
+using ITBanking.Core.Application.Dtos.Account;
+using ITBanking.Core.Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.ViewComponents
 {
-    public class TransferViewComponent : ViewComponent
+  public class TransferViewComponent : ViewComponent
+  {
+    private readonly ITransferService _transferService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly AuthenticationResponse? _currentUser;
+
+    public TransferViewComponent(ITransferService transferService, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly ITransferService _transfer;
-
-        public TransferViewComponent(ITransferService transfer) => _transfer = transfer;
-
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            var tansfer = await _transfer.GetAll();
-            return View(tansfer);
-        }
+      _transferService = transferService;
+      _httpContextAccessor = httpContextAccessor;
+      _currentUser = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
     }
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+      var transfer = await _transferService.GetAll();
+      if (_currentUser != null && !_currentUser.Roles.Where(x => x.ToString() == "Admin").Any()){
+        transfer = transfer.Where(x => x.Sender == _currentUser.Id);
+      }
+      return View(transfer);
+    }
+  }
 }

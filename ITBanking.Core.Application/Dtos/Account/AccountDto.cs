@@ -11,4 +11,5 @@ public class AccountDto{
   public string Email { get; set; } = null!;
   public string FullName { get; set; } = null!;
   public string DNI { get; set; } = null!;
+  public bool EmailConfirmed { get; set; }
 }

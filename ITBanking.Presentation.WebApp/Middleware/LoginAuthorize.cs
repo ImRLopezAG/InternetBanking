@@ -2,7 +2,7 @@
 using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ITBanking.Presentation.Middleware {
+namespace ITBanking.Presentation.Middleware;
   public class LoginAuthorize : IAsyncActionFilter {
     private readonly ValidateSessions _userSession;
 
@@ -18,4 +18,4 @@ namespace ITBanking.Presentation.Middleware {
         await next();
     }
   }
-}
+

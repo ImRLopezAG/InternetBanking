@@ -17,7 +17,6 @@ public class SaveUserVm : SavePersonVm
     [DataType(DataType.Password)]
     public string ConfirmPassword { get; set; } = null!;
     public int Role { get; set; }
-
-    public double Amount { get; set; }
+    public double? Amount { get; set; }
 
 }

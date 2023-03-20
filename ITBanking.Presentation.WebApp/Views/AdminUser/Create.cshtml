@@ -68,7 +68,7 @@
       </div>
       @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any())
       {
-        <div class="form-group">
+        <div class="form-group mb-3">
           <label asp-for="Role" class="control-label"></label>
           <select asp-for="Role" class="form-control">
             <option value="2">Admin</option>
@@ -77,6 +77,9 @@
           <span asp-validation-for="Role" class="text-danger"></span>
         </div>
       }
+      <div id="MainAmount">
+        
+      </div>     
       <div>
         <div class="float-start">
           <a asp-action="Index" class="btn btn-primary">Back</a>
@@ -93,3 +96,21 @@
 await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 }
+
+<script>
+  const role = document.getElementById("Role");
+  const mainAmount = document.getElementById("MainAmount");
+  const amount = document.createElement("div");
+  amount.innerHTML = `<div class="form-group mb-3">
+                        <label name="Amount" id="Amount" class="control-label">Amount</label>
+                        <input name="Amount" type="number" id="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                      </div>`;
+  role.onchange = function () {
+    if (role.value == 2) {
+      mainAmount.innerHTML = "";
+    } else {
+      mainAmount.appendChild(amount);
+    }
+  };
+</script>
