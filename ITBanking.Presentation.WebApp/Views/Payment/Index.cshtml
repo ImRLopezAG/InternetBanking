@@ -1,0 +1,12 @@
+@using ITBanking.Core.Application.ViewModels
+@model PaymentVm
+
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<div class="row">
+  <h1>Payments</h1>
+  <hr />
+  @await Component.InvokeAsync("Payment")
+</div>

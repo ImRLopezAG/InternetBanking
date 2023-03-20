@@ -191,6 +191,7 @@ public class AccountService : IAccountService {
       UserName = x.UserName,
       FullName = x.FirstName + " " + x.LastName,
       DNI = x.DNI,
+      EmailConfirmed = x.EmailConfirmed,
     });
 
     return query;
@@ -207,6 +208,7 @@ public class AccountService : IAccountService {
       UserName = account.UserName,
       FullName = account.FirstName + " " + account.LastName,
       DNI = account.DNI,
+      EmailConfirmed = account.EmailConfirmed,
     };
 
     return query;

@@ -1,0 +1,12 @@
+@using ITBanking.Core.Application.ViewModels
+@model ProductVm
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="row">
+  <h1>Products</h1>
+  <hr />
+  @await Component.InvokeAsync("Product")
+</div>

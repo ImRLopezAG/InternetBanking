@@ -25,30 +25,30 @@ public class TransferService: GenericService<TransferVm, TransferSaveVm, Transfe
   }
 
 
-  // public override async Task<IEnumerable<TransferVm>> GetAll()
-  // {
-  //   var users = _userService.GetAll();
-  //   var products = await _productRepository.GetAll();
-  //   var query = from Transfer in await _transferRepository.GetAll()
-  //                   select _mapper.Map<TransferVm>(Transfer, opt => opt.AfterMap((src, trf) =>
-  //                   {
-  //                     trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
-  //                     trf.AcountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
-  //                   }));
-  //   return query.ToList();
-  // }
+  public override async Task<IEnumerable<TransferVm>> GetAll()
+  {
+    var users = _userService.GetAll();
+    var products = await _productRepository.GetAll();
+    var query = from Transfer in await _transferRepository.GetAll()
+                    select _mapper.Map<TransferVm>(Transfer, opt => opt.AfterMap((src, trf) =>
+                    {
+                      trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
+                      trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
+                    }));
+    return query.ToList();
+  }
 
-//   public override async Task<TransferVm> GetById(int id)
-//   {
-//     var users = _userService.GetAll();
-//     var products = await _productRepository.GetAll();
-//     var transfer = await _transferRepository.GetEntity(id);
-//     var query = _mapper.Map<TransferVm>(transfer, opt => opt.AfterMap((src, trf) =>
-//     {
-//       trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
-//       trf.AcountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
-//     }));
-//     return query;
-//   }
+  public override async Task<TransferVm> GetById(int id)
+  {
+    var users = _userService.GetAll();
+    var products = await _productRepository.GetAll();
+    var transfer = await _transferRepository.GetEntity(id);
+    var query = _mapper.Map<TransferVm>(transfer, opt => opt.AfterMap((src, trf) =>
+    {
+      trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
+      trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
+    }));
+    return query;
+  }
 
  }
