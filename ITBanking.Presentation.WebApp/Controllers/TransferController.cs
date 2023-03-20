@@ -21,26 +21,26 @@ public class TransferController : Controller
     _productService = productService;
   }
 
-  public IActionResult Index()
-  {
-    return View();
-  }
+  public IActionResult Index()=>View(new TransferVm());
 
   [HttpPost]
-  public async Task<IActionResult> Index(string accountnumber)
+  public async Task<IActionResult> Index(string accountNumber)
   {
-        var transfer = await _productService.GetAccount(accountnumber);
+        var transfer = await _productService.GetAccount(accountNumber);
         if(transfer == null)
         {
-                ModelState.AddModelError("NoAccount","No existe una cuenta con ese número de cuenta");
-                return View("Index");
+          return View("Index", new TransferVm(){
+            HasError = true,
+            Error = "Account not found"
+          });
+          
         }
         return View("Transfer",transfer);
   }
 
 
   [HttpPost]
-  public async Task<IActionResult> Transfer(PaymentSaveVm model)
+  public async Task<IActionResult> Transfer(TransferSaveVm model)
   {
     return RedirectToAction("Index");
   }

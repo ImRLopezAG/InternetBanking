@@ -4,9 +4,7 @@ using ITBanking.Infrastructure.Identity.Entities;
 using ITBanking.Infrastructure.Identity.Seeds;
 using ITBanking.Infrastructure.Persistence;
 using ITBanking.Infrastructure.Shared;
-using ITBanking.Presentation.Middleware;
 using ITBanking.Presentation.WebApp.Middleware;
-using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

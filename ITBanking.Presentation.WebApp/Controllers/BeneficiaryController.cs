@@ -1,6 +1,7 @@
 using ITBanking.Core.Application.Contracts;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
+using ITBanking.Core.Application.ViewModels;
 using ITBanking.Core.Application.ViewModels.SaveVm;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,15 +22,17 @@ public class BeneficiaryController : Controller {
   }
 
   public IActionResult Index() {
-    return View();
+    return View(new BeneficiaryVm());
   }
   [HttpPost]
   public async Task<IActionResult> Add(string accountNumber) {
     try {
       var product = await _productService.GetAccount(accountNumber);
       if (product == null || product.UserId == _currentUser.Id || product.TyAccountId != 1) {
-        ModelState.AddModelError("", "accountNumber is invalid or you are the owner");
-        return View("Index");
+        return View("Index",new BeneficiaryVm {
+          HasError = true,
+          Error = "account number not found"
+        });
       }
 
       var beneficiary = new BeneficiarySaveVm {

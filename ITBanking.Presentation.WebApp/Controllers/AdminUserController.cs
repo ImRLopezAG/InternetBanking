@@ -1,10 +1,10 @@
 using ITBanking.Core.Application.Contracts;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.ViewModels.SaveVm;
+using ITBanking.Presentation.WebApp.Middleware;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
-
 public class AdminUserController : Controller {
   private readonly IUserService _userService;
 
@@ -13,13 +13,9 @@ public class AdminUserController : Controller {
   }
 
   public IActionResult Index() => View();
-
-
-
-  public IActionResult Create() {
-    return View(new SaveUserVm());
-  }
-
+  public IActionResult Create() =>View(new SaveUserVm());
+  
+  [ServiceFilter(typeof(SaveAuthorize))]
   [HttpPost]
   public async Task<IActionResult> Create(SaveUserVm vm) {
     vm.Amount = vm.Amount != null ? vm.Amount : 0;
@@ -33,4 +29,6 @@ public class AdminUserController : Controller {
     }
     return RedirectToRoute(new { controller = "AdminUser", action = "Index" });
   }
+
+  public async Task<IActionResult> Edit(string id) => View();
 }

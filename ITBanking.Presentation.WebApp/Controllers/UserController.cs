@@ -3,7 +3,7 @@ using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels.SaveVm;
 using ITBanking.Core.Application.ViewModels.User;
-using ITBanking.Presentation.Middleware;
+using ITBanking.Presentation.WebApp.Middleware;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;

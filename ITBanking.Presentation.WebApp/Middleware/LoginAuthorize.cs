@@ -1,8 +1,7 @@
 ﻿using ITBanking.Presentation.WebApp.Controllers;
-using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Mvc.Filters;
+namespace ITBanking.Presentation.WebApp.Middleware;
 
-namespace ITBanking.Presentation.Middleware;
   public class LoginAuthorize : IAsyncActionFilter {
     private readonly ValidateSessions _userSession;
 

@@ -1,7 +1,6 @@
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Presentation.WebApp.Controllers;
-using ITBanking.Web.Middleware;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ITBanking.Presentation.WebApp.Middleware;
@@ -15,7 +14,7 @@ public class SaveAuthorize : IAsyncActionFilter {
   } 
 
   public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
-    if (_userSession.IsAdmin()) {
+    if (!_userSession.IsAdmin()) {
       var controller = ( AdminUserController )context.Controller;
       context.Result = controller.RedirectToAction("Index", "Home");
     } else
