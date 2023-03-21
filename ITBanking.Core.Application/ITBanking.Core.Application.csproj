@@ -25,7 +25,6 @@
     <Folder Include="Dtos\" />
     <Folder Include="Mapping\" />
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

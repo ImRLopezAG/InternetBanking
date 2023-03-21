@@ -8,47 +8,44 @@ using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Services;
 
-public class TransferService: GenericService<TransferVm, TransferSaveVm, Transfer>, ITransferService
-{
-  private readonly ITransferRepository _transferRepository;
-  private readonly IMapper _mapper;
-  private readonly IUserService _userService;
+public class TransferService : GenericService<TransferVm, TransferSaveVm, Transfer>, ITransferService {
+    private readonly ITransferRepository _transferRepository;
+    private readonly IMapper _mapper;
+    private readonly IUserService _userService;
+    private readonly ICardRepository _cardRepository;
 
-  private readonly IProductRepository _productRepository;
+    private readonly IProductRepository _productRepository;
 
-  public TransferService(ITransferRepository transferRepository, IMapper mapper, IUserService userService, IProductRepository productRepository) : base(transferRepository, mapper)
-  {
-    _transferRepository = transferRepository;
-    _mapper = mapper;
-    _userService = userService;
-    _productRepository = productRepository;
-  }
+    public TransferService(ITransferRepository transferRepository, IMapper mapper, IUserService userService, IProductRepository productRepository, ICardRepository cardRepository) : base(transferRepository, mapper) {
+        _transferRepository = transferRepository;
+        _mapper = mapper;
+        _userService = userService;
+        _productRepository = productRepository;
+        _cardRepository = cardRepository;
+    }
 
 
-  public override async Task<IEnumerable<TransferVm>> GetAll()
-  {
-    var users = await _userService.GetAll();
-    var products = await _productRepository.GetAll();
-    var query = from Transfer in await _transferRepository.GetAll()
-                    select _mapper.Map<TransferVm>(Transfer, opt => opt.AfterMap((src, trf) =>
-                    {
-                      trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
-                      trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
+    public override async Task<IEnumerable<TransferVm>> GetAll() {
+        var users = await _userService.GetAll();
+        var products = await _productRepository.GetAll();
+        var query = from Transfer in await _transferRepository.GetAll()
+                    select _mapper.Map<TransferVm>(Transfer, opt => opt.AfterMap((src, trf) => {
+                        trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
+                        trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
                     }));
-    return query.ToList();
-  }
+        return query.ToList();
+    }
 
-  public override async Task<TransferVm> GetById(int id)
-  {
-    var users =await _userService.GetAll();
-    var products = await _productRepository.GetAll();
-    var transfer = await _transferRepository.GetEntity(id);
-    var query = _mapper.Map<TransferVm>(transfer, opt => opt.AfterMap((src, trf) =>
-    {
-      trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
-      trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
-    }));
-    return query;
-  }
 
- }
+    public override async Task<TransferVm> GetById(int id) {
+        var users = await _userService.GetAll();
+        var products = await _productRepository.GetAll();
+        var transfer = await _transferRepository.GetEntity(id);
+        var query = _mapper.Map<TransferVm>(transfer, opt => opt.AfterMap((src, trf) => {
+            trf.Name = users.FirstOrDefault(x => x.Id == trf.Receptor).FullName;
+            trf.AccountNumber = products.FirstOrDefault(x => x.Id == trf.RProductId).AccountNumber;
+        }));
+        return query;
+    }
+
+}
