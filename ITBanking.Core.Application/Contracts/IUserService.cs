@@ -12,8 +12,8 @@ public interface IUserService {
     Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordVm vm);
     Task SignOutAsync();
     Task<RegisterResponse> UpdateUserAsync(SaveUserVm vm);
-    Task ActivateUser(string id);
-    Task<SaveUserVm> GetByIdSave(string id);
+    Task ChangeStatus(string id);
+    Task<SaveUserVm> GetEntity(string id);
     Task<IEnumerable<AccountDto>> GetAll();
     Task<AccountDto> GetById(string id);
 }

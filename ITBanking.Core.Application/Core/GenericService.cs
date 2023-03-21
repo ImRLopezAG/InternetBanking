@@ -32,9 +32,15 @@ public class GenericService<EntityVm, SaveEntityVm, Entity> : IGenericService<En
   }
 
   public virtual async Task<SaveEntityVm> Save(SaveEntityVm vm) {
-    var entity = _mapper.Map<Entity>(vm);
+    try{
+      var entity = _mapper.Map<Entity>(vm);
     await _repository.Save(entity);
     return _mapper.Map<SaveEntityVm>(entity);
+    }catch(Exception ex){
+      vm.HasError = true;
+      vm.Error = ex.Message;
+      return vm;
+    }
   }
 
   public virtual async Task Edit(SaveEntityVm vm) {

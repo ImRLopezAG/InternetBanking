@@ -11,4 +11,5 @@ namespace ITBanking.Core.Application.Contracts;
 
 public interface IProductService: IGenericService<ProductVm, ProductSaveVm, Product>{
   Task<ProductVm> GetAccount(string accountNumber);
+  Task AddAmount(double amount, int Id);
 }

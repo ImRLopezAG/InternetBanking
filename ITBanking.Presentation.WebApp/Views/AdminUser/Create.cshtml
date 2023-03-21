@@ -66,8 +66,7 @@
         <input asp-for="ConfirmPassword" class="form-control" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
       </div>
-      @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any())
-      {
+      
         <div class="form-group mb-3">
           <label asp-for="Role" class="control-label"></label>
           <select asp-for="Role" class="form-control">
@@ -76,7 +75,7 @@
           </select>
           <span asp-validation-for="Role" class="text-danger"></span>
         </div>
-      }
+      
       <div id="MainAmount">
         
       </div>     
@@ -101,16 +100,16 @@ await Html.RenderPartialAsync("_ValidationScriptsPartial");
   const role = document.getElementById("Role");
   const mainAmount = document.getElementById("MainAmount");
   const amount = document.createElement("div");
-  amount.innerHTML = `<div class="form-group mb-3">
-                        <label name="Amount" id="Amount" class="control-label">Amount</label>
-                        <input name="Amount" type="number" id="Amount" class="form-control" />
-                        <span asp-validation-for="Amount" class="text-danger"></span>
-                      </div>`;
-  role.onchange = function () {
-    if (role.value == 2) {
-      mainAmount.innerHTML = "";
-    } else {
+  role.addEventListener("change", (e) => {
+    if (e.target.value == 2) {
+      amount.innerHTML = `<div class="form-group mb-3">
+        <label asp-for="Amount" class="control-label"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+      </div>`;
       mainAmount.appendChild(amount);
+    } else {
+      mainAmount.removeChild(amount);
     }
-  };
+  });
 </script>

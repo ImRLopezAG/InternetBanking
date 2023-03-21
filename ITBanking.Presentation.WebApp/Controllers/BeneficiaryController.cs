@@ -36,7 +36,7 @@ public class BeneficiaryController : Controller {
       }
 
       var beneficiary = new BeneficiarySaveVm {
-        ProductId = product.Id,
+        ProductId = (int) product.Id,
         Sender = _currentUser.Id,
         Receptor = product.UserId,
       };
