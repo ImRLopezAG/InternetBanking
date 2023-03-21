@@ -1,49 +1,55 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using ITBanking.Core.Application.Contracts;
+using ITBanking.Core.Application.Dtos.Account;
+using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels;
-using ITBanking.Core.Application.ViewModels.SaveVm;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
 
-public class TransferController : Controller
-{
-  private readonly IPaymentService _paymentService;
-  private readonly IProductService _productService;
-  public TransferController(IPaymentService paymentService, IProductService productService)
-  {
-    _paymentService = paymentService;
-    _productService = productService;
-  }
+public class TransferController : Controller {
+    private readonly IPaymentService _paymentService;
+    private readonly IProductService _productService;
+    private readonly IUserService _userService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly AuthenticationResponse? _currentUser;
 
-  public IActionResult Index()=>View(new TransferVm());
+    public TransferController(IPaymentService paymentService, IProductService productService, IUserService userService, IHttpContextAccessor accessor) {
+        _paymentService = paymentService;
+        _productService = productService;
+        _userService = userService;
+        _httpContextAccessor = accessor;
+        _currentUser = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
 
-  [HttpPost]
-  public async Task<IActionResult> Index(string accountNumber)
-  {
-        var transfer = await _productService.GetAccount(accountNumber);
-        if(transfer == null)
-        {
-          return View("Index", new TransferVm(){
-            HasError = true,
-            Error = "Account not found"
-          });
-          
+
+    }
+
+    public IActionResult Index() => View();
+
+
+    [HttpPost]
+    public async Task<IActionResult> Index(string AccountNumber) {
+        var transfer = await _productService.GetAccount(AccountNumber);
+        if (transfer == null) {
+            return View("Index", new TransferVm() {
+                HasError = true,
+                Error = "Account not found"
+            });
+
         }
-        return View("Transfer",transfer);
-  }
+        return View("Transfer", transfer);
+    }
 
 
-  [HttpPost]
-  public async Task<IActionResult> Transfer(TransferSaveVm model)
-  {
-    return RedirectToAction("Index");
-  }
+    [HttpPost]
+    public IActionResult Transfer() {
+        //var items = await _productService.GetAll();
+        //items = items.Where(x => x.UserId == _currentUser.Id);
 
-  
+        //ViewBag.SaveAccounts = items.Where(client =>
+        //client.TyAccountId == ( int )AccountType.PersonalSavings).ToList();
+
+        return View();
+    }
+
+
 }
