@@ -9,5 +9,6 @@ public class RegisterRequest {
     public string ConfirmPassword { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;
     public string DNI { get; set; } = null!;
+    public int Role { get; set; }
 }
 

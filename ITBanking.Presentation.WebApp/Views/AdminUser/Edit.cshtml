@@ -34,9 +34,14 @@
         <span asp-validation-for="Email" class="text-danger"></span>
       </div>
       <div class="form-group">
-        <label asp-for="PhoneNumber" class="control-label">Phone</label>
+        <label asp-for="PhoneNumber" class="control-label">Phone </label>
         <input asp-for="PhoneNumber" class="form-control" />
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="DNI" class="control-label"></label>
+        <input asp-for="DNI" class="form-control" />
+        <span asp-validation-for="DNI" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="UserName" class="control-label"></label>
@@ -49,10 +54,17 @@
         <span asp-validation-for="Password" class="text-danger"></span>
       </div>
       <div class="form-group mb-3">
-        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <label asp-for="ConfirmPassword" class="control-label"> Confirm Password</label>
         <input asp-for="ConfirmPassword" class="form-control" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
       </div>
+      @if (Model.Role == 3){
+        <div class="form-group mb-3">
+          <label name="Amount" id="Amount" class="control-label">Amount</label>
+          <input name="Amount" type="number" id="Amount" class="form-control" />
+          <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+      }
       <div>
         <div class="float-start">
           <a asp-action="Index" class="btn btn-primary">Back</a>

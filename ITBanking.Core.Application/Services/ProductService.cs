@@ -26,16 +26,18 @@ public class ProductService : GenericService<ProductVm, ProductSaveVm, Product>,
     _mapper = mapper;
   }
 
+  public async Task AddAmount(double amount, int Id){
+    var product = await _productRepository.GetEntity(Id);
+    product.Amount += amount;
+    await _productRepository.Update(product);
+  }
+
   public async Task<ProductVm> GetAccount(string accountNumber) => _mapper.Map<ProductVm>(await _productRepository.GetAccount(accountNumber));
 
   public async override Task<IEnumerable<ProductVm>> GetAll() {
     var query = from product in await _productRepository.GetAll()
-                join card in await _cardRepository.GetAll() on product.Id equals card.ProductId
                 select _mapper.Map<ProductVm>(product, opt => opt.AfterMap((src, prd) => {
                   prd.Type = GetEnum.Products(product.TyAccountId);
-                  prd.Card = _mapper.Map<CardVm>(card, opt => opt.AfterMap((src, crd) =>
-                      crd.Type = GetEnum.Cards(crd.TypeId)
-                  ));
                 }));
 
     return query;
@@ -43,13 +45,9 @@ public class ProductService : GenericService<ProductVm, ProductSaveVm, Product>,
 
   public async override Task<ProductVm> GetById(int id) {
     var product = await _productRepository.GetEntity(id);
-    var card = await _cardRepository.GetByProductId(id);
 
     var query = _mapper.Map<ProductVm>(product, opt => opt.AfterMap((src, prd) => {
-      prd.Type = GetEnum.Products(product.TyAccountId);
-      prd.Card = _mapper.Map<CardVm>(card, opt => opt.AfterMap((src, crd) =>
-          crd.Type = GetEnum.Cards(crd.TypeId)
-      ));
+      prd.Type = GetEnum.Products(product.TyAccountId);     
     }));
     return query;
   }

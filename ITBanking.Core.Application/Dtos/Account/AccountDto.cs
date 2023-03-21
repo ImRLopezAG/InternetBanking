@@ -16,4 +16,5 @@ public class AccountDto{
   public bool EmailConfirmed { get; set; }
   public int Products { get; set; }
   public string Role { get; set; } = null!;
+  public string  PhoneNumber { get; set; }= null!;
 }

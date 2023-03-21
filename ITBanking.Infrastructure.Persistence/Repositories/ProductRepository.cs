@@ -17,4 +17,5 @@ public class ProductRepository: GenericRepository<Product>, IProductRepository
   public ProductRepository(ITBankingContext context) : base(context) => _context = context;
 
   public async Task<Product> GetAccount(string accountNumber) => await _context.Products.FirstOrDefaultAsync(p => p.AccountNumber == accountNumber);
+  public async Task<Product> GetByUser(string user) => await _context.Products.Where(pr => pr.IsPrincipal && pr.UserId ==user).FirstOrDefaultAsync();
 }

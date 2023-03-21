@@ -6,62 +6,61 @@
 
 
 <div class="row">
-    <table class="table table-dark table-striped table-hover text-center">
-        <thead class="text-start">
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    DNI
-                </th>
-                <th>
-                    Products
-                </th>
-                <th>
-                    Role
-                </th>
-                <th>
-                    Edit
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DNI)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Products)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Role)
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-primary" asp-controller="AdminUser" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    </td>
-                    <td>
-                        @if (!item.EmailConfirmed) {
-                            <a class="btn btn-outline-success" asp-controller="AdminUser" asp-action="ChangeStatus" asp-route-id="@item.Id">Active</a>
-                        } else {
-                            <a class="btn btn-outline-danger" asp-controller="AdminUser" asp-action="ChangeStatus" asp-route-id="@item.Id">Desactive</a>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+  <table class="table table-dark table-striped table-hover text-center">
+    <thead class="text-start">
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          DNI
+        </th>
+        <th>
+          Products
+        </th>
+        <th>
+          Role
+        </th>
+        <th>
+          Edit
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Email)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.DNI)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Products)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Role)
+          </td>
+          <td>
+            <a class="btn btn-outline-primary" asp-controller="AdminUser" asp-action="Edit"
+            asp-route-id="@item.Id">Edit</a>
+          </td>
+          <td>
+            <a class="btn btn-outline-@(item.EmailConfirmed ==false ?"success" : "danger")" asp-controller="AdminUser" asp-action="ChangeStatus"
+            asp-route-id="@item.Id">@(item.EmailConfirmed ==false ?"Active" : "Desactive")</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </div>
