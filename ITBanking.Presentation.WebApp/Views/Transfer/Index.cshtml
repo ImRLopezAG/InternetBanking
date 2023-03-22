@@ -4,27 +4,32 @@
 @using ITBanking.Core.Application.Helpers;
 @inject IHttpContextAccessor _httpContext;
 @{
-    ViewData["Title"] = "Transfers";
-    AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+  ViewData["Title"] = "Transfers";
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
 }
 
 <div class="row">
-
-    <div class="d-flex flex-row justify-content-between align-items-center">
-        <h1>Transfers</h1>
-        @if (user != null && !user.Roles.Where(x => x.ToString() == "Admin").Any()) {
-            <form method="post" asp-action="Index" asp-controller="Transfer">
-                <div class="d-flex flex-row gap-2 justify-content-around align-items-center">
-                    <div class="form-group">
-                        <input type="search" class="form-control" Name="AccountNumber" placeholder="Account number" />
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">Transfer</button>
-                    </div>
-                </div>
-            </form>
-        }
+  @if (Model.HasError) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <p>@Model.Error</p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <hr />
-    @await Component.InvokeAsync("Transfer")
+  }
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <h1>Transfers</h1>
+    @if (user != null && !user.Roles.Where(x => x.ToString() == "Admin").Any()) {
+      <form method="post" asp-action="Index" asp-controller="Transfer">
+        <div class="d-flex flex-row gap-2 justify-content-around align-items-center">
+          <div class="form-group">
+            <input type="search" class="form-control" Name="AccountNumber" placeholder="Account number" />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-outline-primary">Transfer</button>
+          </div>
+        </div>
+      </form>
+    }
+  </div>
+  <hr />
+  @await Component.InvokeAsync("Transfer")
 </div>

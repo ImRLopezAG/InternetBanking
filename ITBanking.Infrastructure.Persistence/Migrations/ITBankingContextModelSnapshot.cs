@@ -54,63 +54,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.ToTable("Beneficiaries", (string)null);
                 });
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Card", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Cvv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HasLimit")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("Limit")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Provider")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardNumber")
-                        .IsUnique();
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
-                    b.ToTable("Cards", (string)null);
-                });
-
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -169,11 +112,17 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("HasLimit")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<double?>("Limit")
+                        .HasColumnType("float");
 
                     b.Property<int>("TyAccountId")
                         .HasColumnType("int");
@@ -241,17 +190,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Card", b =>
-                {
-                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
-                        .WithOne("Card")
-                        .HasForeignKey("ITBanking.Core.Domain.Entities.Card", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b =>
                 {
                     b.HasOne("ITBanking.Core.Domain.Entities.Product", "RProduct")
@@ -293,8 +231,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Beneficiaries");
-
-                    b.Navigation("Card");
 
                     b.Navigation("RPayments");
 

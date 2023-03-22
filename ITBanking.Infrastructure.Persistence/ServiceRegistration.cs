@@ -23,7 +23,6 @@ namespace ITBanking.Infrastructure.Persistence {
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddScoped<IPaymentRepository, PaymentRepository>();
       services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
-      services.AddScoped<ICardRepository, CardRepository>();
       services.AddScoped<IProductRepository, ProductRepository>();
       services.AddScoped<ITransferRepository, TransferRepository>();
       #endregion

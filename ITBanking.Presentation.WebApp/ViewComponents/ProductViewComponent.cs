@@ -27,6 +27,6 @@ public class ProductViewComponent : ViewComponent
     if (_currentUser != null && !_currentUser.Roles.Where(x => x.ToString() == "Admin").Any()){
       products = products.Where(x => x.UserId == _currentUser.Id);
     }
-    return View(products.OrderBy(x => x.IsPrincipal));
+    return View(products.OrderByDescending(x => x.IsPrincipal));
   }
 }

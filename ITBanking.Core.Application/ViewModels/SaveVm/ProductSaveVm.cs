@@ -10,6 +10,8 @@ public class ProductSaveVm : BaseProductVm {
     public string? UserId { get; set; } = null!;
     [Required(ErrorMessage = "The Account Type is required")]
     public int TyAccountId { get; set; }
+    public bool? HasLimit { get; set; }
+    public double? Limit { get; set; }
 
     // Ignore mapping
     public IEnumerable<AccountDto>? Users { get; set; } = null!;

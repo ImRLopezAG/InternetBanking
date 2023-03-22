@@ -13,16 +13,14 @@ namespace ITBanking.Core.Application.Services;
 public class UserService : IUserService
 {
   private readonly IAccountService _accountService;
-  private readonly ICardRepository _cardRepository;
   private readonly IProductRepository _productRepository;
   private readonly IHttpContextAccessor _httpContextAccessor;
   private readonly IEmailService _emailService;
   private readonly IMapper _mapper;
 
-  public UserService(IAccountService accountService, ICardRepository cardRepository, IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IMapper mapper)
+  public UserService(IAccountService accountService,  IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IMapper mapper)
   {
     _accountService = accountService;
-    _cardRepository = cardRepository;
     _productRepository = productRepository;
     _httpContextAccessor = httpContextAccessor;
     _emailService = emailService;
@@ -50,13 +48,12 @@ public class UserService : IUserService
     {
       string pin = Generate.Pin();
 
-      Product productToSave = new()
-      {
+      Product productToSave = new(){
         UserId = registerResponse.UserId,
         AccountNumber = pin,
         IsPrincipal = true,
         TyAccountId = 1,
-        Amount = (double)model.Amount,
+        Amount = (double)model.Amount
       };
 
       await _productRepository.Save(productToSave);
