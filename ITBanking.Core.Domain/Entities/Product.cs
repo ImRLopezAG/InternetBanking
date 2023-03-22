@@ -2,7 +2,7 @@ using ITBanking.Core.Domain.Core;
 
 namespace ITBanking.Core.Domain.Entities;
 
-public class Product : BaseProductEntity{
+public class Product : BaseProductEntity {
     public string AccountNumber { get; set; } = null!;
     public bool IsPrincipal { get; set; }
     public string UserId { get; set; } = null!;
