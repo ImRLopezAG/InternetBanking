@@ -7,6 +7,8 @@ public class Product : BaseProductEntity {
     public bool IsPrincipal { get; set; }
     public string UserId { get; set; } = null!;
     public int TyAccountId { get; set; }
+    public bool? HasLimit { get; set; }
+    public double? Limit { get; set; }
 
     // Navigation properties
 
@@ -15,6 +17,5 @@ public class Product : BaseProductEntity {
     public ICollection<Transfer> STransfers { get; set; } = null!;
     public ICollection<Transfer> RTransfers { get; set; } = null!;
     public ICollection<Beneficiary> Beneficiaries { get; set; } = null!;
-    public Card? Card { get; set; } = null!;
 
 }

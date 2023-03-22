@@ -11,7 +11,6 @@ public class ITBankingContext : DbContext {
   public DbSet<Payment> Payments { get; set; }
   public DbSet<Transfer> Transfers { get; set; }
   public DbSet<Product> Products { get; set; }
-  public DbSet<Card> Cards { get; set; }
   public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new()) {
     foreach (var entry in ChangeTracker.Entries<BaseEntity>())
       switch (entry.State) {
@@ -31,7 +30,6 @@ public class ITBankingContext : DbContext {
     modelBuilder.Entity<Payment>().ToTable("Payments");
     modelBuilder.Entity<Transfer>().ToTable("Transfers");
     modelBuilder.Entity<Product>().ToTable("Products");
-    modelBuilder.Entity<Card>().ToTable("Cards");
 
     #endregion
 
@@ -40,7 +38,6 @@ public class ITBankingContext : DbContext {
     modelBuilder.Entity<Payment>().HasKey(x => x.Id);
     modelBuilder.Entity<Transfer>().HasKey(x => x.Id);
     modelBuilder.Entity<Product>().HasKey(x => x.Id);
-    modelBuilder.Entity<Card>().HasKey(x => x.Id);
     #endregion
 
     #region Configuration
@@ -48,7 +45,6 @@ public class ITBankingContext : DbContext {
     modelBuilder.Entity<Payment>().Property(x => x.Id).UseIdentityColumn(1, 1);
     modelBuilder.Entity<Transfer>().Property(x => x.Id).UseIdentityColumn(1, 1);
     modelBuilder.Entity<Product>().Property(x => x.Id).UseIdentityColumn(1, 1);
-    modelBuilder.Entity<Card>().Property(x => x.Id).UseIdentityColumn(1, 1);
     #endregion
 
     #region Relations
@@ -80,16 +76,12 @@ public class ITBankingContext : DbContext {
       .HasForeignKey(x => x.SProductId)
       .OnDelete(DeleteBehavior.NoAction);
 
-    modelBuilder.Entity<Product>()
-      .HasOne(x => x.Card)
-      .WithOne(x => x.Product)
-      .HasForeignKey<Card>(x => x.ProductId);
+    
     
     #endregion
 
     #region Configuration
     
-    modelBuilder.Entity<Card>().HasIndex(x => x.CardNumber).IsUnique();
     modelBuilder.Entity<Product>().HasIndex(x => x.AccountNumber).IsUnique();
 
     #endregion

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITBanking.Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20230319022435_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20230322174134_InitialIDT")]
+    partial class InitialIDT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

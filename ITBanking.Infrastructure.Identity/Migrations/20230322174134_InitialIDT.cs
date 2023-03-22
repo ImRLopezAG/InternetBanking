@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ITBanking.Infrastructure.Identity.Migrations
 {
-    public partial class InitialIdentity : Migration
+    public partial class InitialIDT : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

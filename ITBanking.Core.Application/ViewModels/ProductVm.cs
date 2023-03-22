@@ -12,6 +12,8 @@ public class ProductVm: BaseProductVm{
     public bool IsPrincipal { get; set; }
     public string UserId { get; set; } = null!;
     public int TyAccountId { get; set; }
+    public bool? HasLimit { get; set; }
+    public double? Limit { get; set; }
 
-    public CardVm Card { get; set; } = null!;
+    public string UserName { get; set; } = null!;
 }

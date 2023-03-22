@@ -19,6 +19,8 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     IsPrincipal = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TyAccountId = table.Column<int>(type: "int", nullable: false),
+                    HasLimit = table.Column<bool>(type: "bit", nullable: true),
+                    Limit = table.Column<double>(type: "float", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false)
@@ -52,35 +54,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HasLimit = table.Column<bool>(type: "bit", nullable: true),
-                    Limit = table.Column<double>(type: "float", nullable: true),
-                    Expiration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cvv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cards_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -90,7 +63,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     RProductId = table.Column<int>(type: "int", nullable: false),
-                    SProductId = table.Column<int>(type: "int", nullable: false)
+                    SProductId = table.Column<int>(type: "int", nullable: false),
+                    Sender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Receptor = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,7 +93,9 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     RProductId = table.Column<int>(type: "int", nullable: false),
-                    SProductId = table.Column<int>(type: "int", nullable: false)
+                    SProductId = table.Column<int>(type: "int", nullable: false),
+                    Sender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Receptor = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,18 +117,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
                 name: "IX_Beneficiaries_ProductId",
                 table: "Beneficiaries",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cards_CardNumber",
-                table: "Cards",
-                column: "CardNumber",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cards_ProductId",
-                table: "Cards",
-                column: "ProductId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payments_RProductId",
@@ -184,9 +149,6 @@ namespace ITBanking.Infrastructure.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Beneficiaries");
-
-            migrationBuilder.DropTable(
-                name: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Payments");
