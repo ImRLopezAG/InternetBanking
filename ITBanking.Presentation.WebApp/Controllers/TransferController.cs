@@ -2,6 +2,7 @@ using ITBanking.Core.Application.Contracts;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels;
+using ITBanking.Core.Application.ViewModels.SaveVm;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
@@ -41,7 +42,11 @@ public class TransferController : Controller {
 
 
     [HttpPost]
-    public IActionResult Transfer() {
+    public async Task<IActionResult> Transfer(TransferSaveVm save) {
+
+        //save.productVms = await _productService.GetAll().ContinueWith(t => t.Result.Where(w => w.Id == save.SProductId));
+
+
         //var items = await _productService.GetAll();
         //items = items.Where(x => x.UserId == _currentUser.Id);
 
