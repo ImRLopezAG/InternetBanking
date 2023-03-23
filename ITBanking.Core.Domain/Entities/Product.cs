@@ -9,6 +9,7 @@ public class Product : BaseProductEntity {
     public int TyAccountId { get; set; }
     public bool? HasLimit { get; set; }
     public double? Limit { get; set; }
+    public double? Dbt { get; set; }
 
     // Navigation properties
 

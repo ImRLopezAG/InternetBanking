@@ -14,6 +14,7 @@ public class ProductVm: BaseProductVm{
     public int TyAccountId { get; set; }
     public bool? HasLimit { get; set; }
     public double? Limit { get; set; }
+    public double Dbt { get; set; }
 
     public string UserName { get; set; } = null!;
 }

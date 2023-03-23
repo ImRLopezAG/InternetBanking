@@ -56,6 +56,21 @@ public class ProductService : GenericService<ProductVm, ProductSaveVm, Product>,
     return query;
   }
 
+  public async override Task<ProductSaveVm> Save(ProductSaveVm vm) {
+    try{
+      var entity = _mapper.Map<Product>(vm);
+      if(vm.TyAccountId == 3){
+        entity.Dbt = (vm.Amount)*(-1);
+        entity.Amount = vm.Amount;
+      }
+     await _productRepository.Save(entity);
+    return _mapper.Map<ProductSaveVm>(entity);
+    }catch(Exception ex){
+      vm.HasError = true;
+      vm.Error = ex.Message;
+      return vm;
+    }
+  }
   public async override Task<ProductVm> GetById(int id) {
     var users = await _userService.GetAll();
     var product = await _productRepository.GetEntity(id);

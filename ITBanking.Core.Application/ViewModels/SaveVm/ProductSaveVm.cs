@@ -12,6 +12,7 @@ public class ProductSaveVm : BaseProductVm {
     public int TyAccountId { get; set; }
     public bool? HasLimit { get; set; }
     public double? Limit { get; set; }
+    public double? Dbt { get; set; }
 
     // Ignore mapping
     public IEnumerable<AccountDto>? Users { get; set; } = null!;

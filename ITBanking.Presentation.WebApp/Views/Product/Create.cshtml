@@ -44,8 +44,9 @@
       </div>
       <div id="MainLimit">
       </div>
-      <div class="mb-3">
-        <input type="submit" value="Create" class="btn btn-primary" />
+      <div class="mb-3 col-12 btn-group">
+        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-warning">Back</a>
+        <button type="submit" class="btn btn-outline-primary">Create</button>
       </div>
     </form>
   </div>
@@ -60,7 +61,7 @@
   const mainLimit = document.getElementById('MainLimit');
   const limit = document.createElement('div');
   tyAccountId.addEventListener('change', (e) => {
-    if (e.target.value == 2 || e.target.value == 3) {
+    if (e.target.value == 2) {
       limit.innerHTML = `<div class="mb-3">
                           <label for="limit" class="form-label">Limit</label>
                           <input name="limit" class="form-control" />
