@@ -28,7 +28,7 @@ public class ProductController : Controller {
     [ServiceFilter(typeof(SaveAuthorize))]
     [HttpPost]
     public async Task<IActionResult> Create(ProductSaveVm model) {
-        var product = await _productService.GetAll().ContinueWith(t => t.Result.Where(p => p.UserId == model.UserId && p.IsPrincipal));
+        var product = await _productService.GetAll().ContinueWith(t => t.Result.Where(p => p.UserId == model.UserId && p.IsPrincipal).FirstOrDefault());
         model.AccountNumber = Generate.Pin();
         model.Users = await _userService.GetAll().ContinueWith(t => t.Result.Where(u => u.Role != "Admin" || u.Role != "SuperAdmin"));
 
@@ -39,11 +39,10 @@ public class ProductController : Controller {
         }
         model.HasLimit = model.Limit > 0;
 
-        if (model.TyAccountId == 3) {
-            product.FirstOrDefault().Amount += model.Amount;
-            await _productService.Edit(_mapper.Map<ProductSaveVm>(product.FirstOrDefault()));
+        if(model.TyAccountId == 3){
+            product.Amount += model.Amount;
+            await _productService.Edit(_mapper.Map<ProductSaveVm>(product));
         }
-
         var response = await _productService.Save(model);
 
         if (response.HasError) {

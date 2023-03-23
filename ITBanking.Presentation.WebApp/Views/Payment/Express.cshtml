@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card mt-4">
         <div class="card-header bg-success">
-            <h4 class="text-white text-center">Paid Express</h4>
+            <h4 class="text-white text-center">Pay Express</h4>
         </div>
         <div class="card-body">
             <form method="post" asp-action="Express" asp-controller="Payment">
@@ -22,7 +22,10 @@
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Amount" asp-for="Amount">
                 </div>
-                <button type="submit" class="btn w-25 btn-outline-success float-end">Pay</button>
+                <div class="btn-group col-12">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
+                    <button type="submit" class="btn w-25 btn-outline-success w-100">Pay</button>
+                </div>
             </form>
         </div>
     </div>

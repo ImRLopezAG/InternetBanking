@@ -101,10 +101,10 @@
     role.addEventListener("change", (e) => {
         if (e.target.value == 3) {
             amount.innerHTML = `<div class="form-group mb-3">
-        <label name="Amount" class="control-label">Amount</label>
-            <input name="Amount" class="form-control" />
-        <span asp-validation-for="Amount" class="text-danger"></span>
-        </div>`;
+            <label name="Amount" class="control-label">Amount</label>
+                <input name="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>`;
             mainAmount.appendChild(amount);
         } else {
             mainAmount.removeChild(amount);
