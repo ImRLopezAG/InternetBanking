@@ -8,7 +8,7 @@ public static class DefaultAdminUser {
     ApplicationUser defaultUser = new() {
       UserName = "adminUser",
       Email = "admin@email.com",
-      FirstName = "John",
+      FirstName = "Admin",
       LastName = "Doe",
       EmailConfirmed = true,
       PhoneNumberConfirmed = true,
@@ -19,7 +19,6 @@ public static class DefaultAdminUser {
       var user = await userManager.FindByEmailAsync(defaultUser.Email);
       if (user == null) {
         await userManager.CreateAsync(defaultUser, "123Pa$$word!");
-        await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
         await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
       }
     }

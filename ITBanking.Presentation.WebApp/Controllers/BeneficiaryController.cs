@@ -3,11 +3,13 @@ using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels;
 using ITBanking.Core.Application.ViewModels.SaveVm;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
-
-public class BeneficiaryController : Controller{
+[Authorize(Roles = "Basic")]
+public class BeneficiaryController : Controller
+{
   private readonly IBeneficiaryService _beneficiaryService;
   private readonly IProductService _productService;
   private readonly IHttpContextAccessor _httpContextAccessor;
@@ -43,7 +45,8 @@ public class BeneficiaryController : Controller{
       }
       var beneficiaries = await _beneficiaryService.GetAll().ContinueWith(t => t.Result.Where(w => w.ProductId == product.Id && w.Sender == _currentUser.Id));
 
-      if (beneficiaries.Any()){
+      if (beneficiaries.Any())
+      {
         return View("Index", new BeneficiaryVm
         {
           HasError = true,

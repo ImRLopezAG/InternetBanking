@@ -1,36 +1,41 @@
 @using ITBanking.Core.Application.ViewModels
-@model IEnumerable<PaymentVm>
+@model AdminVm
+
+
 
 <div class="row">
-  <table class="table table-dark table-striped table-hover text-center">
-    <thead class="text-center">
-      <tr>
-        <th>
-          Sender
-        </th>
-        <th>
-          Receptor
-        </th>
-        <th>
-          Amount
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var item in Model)
-      {
-        <tr class="tr-success">
-          <td>
-            @Html.DisplayFor(modelItem => item.SProductId)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.RProductId)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+  <dl>
+    <dt>Transfers</dt>
+    <dd>
+      @Model.Transfers
+    </dd>
+    <dt>Transfers in the last 24 hours</dt>
+    <dd>
+      @Model.Transfer24Hours
+    </dd>
+    <dt>Payments</dt>
+    <dd>
+      @Model.Payments
+    </dd>
+    <dt>Payments in the last 24 hours</dt>
+    <dd>
+      @Model.Payment24Hours
+    </dd>
+    <dt>Products</dt>
+    <dd>
+      @Model.Products
+    </dd>
+    <dt>Clients</dt>
+    <dd>
+      @Model.Clients
+    </dd>
+    <dt>Active Clients</dt>
+    <dd>
+      @Model.ActiveClients
+    </dd>
+    <dt>Inactive Clients</dt>
+    <dd>
+      @Model.InactiveClients
+    </dd>
+  </dl>
 </div>
