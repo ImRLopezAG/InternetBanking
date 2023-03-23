@@ -28,14 +28,12 @@ using (var scope = app.Services.CreateScope()) {
   var services = scope.ServiceProvider;
 
   try {
-
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     await DefaultRoles.SeedAsync(userManager, roleManager);
     await DefaultBasicUser.SeedAsync(userManager, roleManager);
     await DefaultAdminUser.SeedAsync(userManager, roleManager);
-    await DefaultSuperAdminUser.SeedAsync(userManager, roleManager);
 
   } catch {
     throw;

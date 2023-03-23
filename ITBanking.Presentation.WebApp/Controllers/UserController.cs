@@ -7,7 +7,8 @@ using ITBanking.Presentation.WebApp.Middleware;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
-public class UserController : Controller{
+public class UserController : Controller
+{
   private readonly IUserService _userService;
 
   public UserController(IUserService userService)

@@ -26,6 +26,6 @@ public class PaymentViewComponent: ViewComponent
       if (_currentUser != null && !_currentUser.Roles.Where(x => x.ToString() == "Admin").Any()){
         payments = payments.Where(x => x.Sender == _currentUser.Id);
       }
-        return View(payments);
+      return View(payments.OrderByDescending(x => x.CreatedAt));
     }
 }

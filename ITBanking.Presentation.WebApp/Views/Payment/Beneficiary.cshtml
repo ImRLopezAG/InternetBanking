@@ -1,28 +1,27 @@
 @using ITBanking.Core.Application.ViewModels.SaveVm
-@model TransferSaveVm
+@model PaymentSaveVm
 
 @{
-  ViewData["Title"] = "Pay Express";
+  ViewData["Title"] = "Beneficiary Express";
 }
 
 <div class="row">
-  @if (Model.HasError){
+  @if (Model.HasError) {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <p>@Model.Error</p>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   }
   <div class="card px-0">
-    <div class="card-header bg-success">
-      <h4 class="text-white text-center">Pay Express</h4>
+    <div class="card-header bg-danger">
+      <h4 class="text-white text-center">Beneficiary Express</h4>
     </div>
     <div class="card-body">
-      <form method="post" asp-action="Express" asp-controller="Payment">
+      <form asp-action="Beneficiary" asp-controller="Payment">
         <div class="mb-3">
           <select class="form-select" asp-for="SProductId">
             <option selected>Select your product...</option>
-            @foreach (var item in Model.Products)
-            {
+            @foreach (var item in Model.Saving) {
               <option value="@item.Id">@item.AccountNumber</option>
             }
           </select>
@@ -35,7 +34,7 @@
         </div>
         <div class="btn-group col-12">
           <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
-          <button type="submit" class="btn w-25 btn-outline-success w-100">Pay</button>
+          <button type="submit" class="btn w-25 btn-outline-danger w-100">Pay</button>
         </div>
       </form>
     </div>

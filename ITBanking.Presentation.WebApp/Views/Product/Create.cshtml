@@ -36,21 +36,12 @@
                     <option value="3">Loans</option>
                 </select>
             </div>
-            @if (Model.TyAccountId == 3) {
                 <div class="mb-3">
-                    <label asp-for="Dbt" class="form-label">Amount</label>
-                    <input type="number" asp-for="Dbt" class="form-control" />
-                    <span asp-validation-for="Dbt" class="text-danger"></span>
-                </div>
-            } else {
-                <div class="mb-3">
-                    <label asp-for="Amount" class="form-label">Amount</label>
-                    <input type="number" asp-for="Amount" class="form-control" />
+                    <label id="p-label" asp-for="Amount" class="form-label">Amount</label>
+                    <input id="p-input" type="number" asp-for="Amount" class="form-control" />
                     <span asp-validation-for="Amount" class="text-danger"></span>
                 </div>
-            }
-            <div id="MainLimit">
-            </div>
+            
             <div class="mb-3 col-12 btn-group">
                 <a asp-controller="Product" asp-action="Index" class="btn btn-outline-warning">Back</a>
                 <button type="submit" class="btn btn-outline-primary">Create</button>
@@ -65,18 +56,23 @@
 
 <script>
     const tyAccountId = document.getElementById('TyAccountId');
-    const mainLimit = document.getElementById('MainLimit');
-    const limit = document.createElement('div');
+    const pLabel = document.getElementById('p-label');
+    const pInput = document.getElementById('p-input');
+
     tyAccountId.addEventListener('change', (e) => {
-        if (e.target.value == 2) {
-            limit.innerHTML = `<div class="mb-3">
-                                                  <label for="limit" class="form-label">Limit</label>
-                                                  <input name="limit" class="form-control" />
-                                                  <span asp-validation-for="Limit" class="text-danger"></span>
-                                                </div>`;
-            mainLimit.appendChild(limit);
-        } else {
-            mainLimit.removeChild(limit);
+        if (e.target.value == 1) {
+            pLabel.innerHTML = 'Amount';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Amount')
+        } else if (e.target.value == 2) {
+            pLabel.innerHTML = 'Credit Limit';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Limit')
+        } else if (e.target.value == 3) {
+            pLabel.innerHTML = 'Loan Amount';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Amount')
         }
     });
+    
 </script>
