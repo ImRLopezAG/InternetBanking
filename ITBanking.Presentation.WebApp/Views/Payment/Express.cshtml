@@ -1,0 +1,32 @@
+@using ITBanking.Core.Application.ViewModels.SaveVm
+@model TransferSaveVm
+
+<div class="container-fluid">
+    <div class="card mt-4">
+        <div class="card-header bg-success">
+            <h4 class="text-white text-center">Pay Express</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Express" asp-controller="Payment">
+                <div class="mb-3">
+                    <select class="form-select" asp-for="SProductId">
+                        <option selected>Select your product...</option>
+                        @foreach (var item in Model.Products) {
+                            <option value="@item.Id">@item.AccountNumber</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Account Receptor" asp-for="Receptor">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Amount" asp-for="Amount">
+                </div>
+                <div class="btn-group col-12">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
+                    <button type="submit" class="btn w-25 btn-outline-success w-100">Pay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
