@@ -11,5 +11,6 @@ namespace ITBanking.Core.Application.Contracts;
 
 public interface IPaymentService: IGenericService<PaymentVm, PaymentSaveVm, Payment>
 {
-    
+    Task<PaymentSaveVm> SaveAdvance(PaymentSaveVm model);
+    Task<PaymentSaveVm> PayCreditCard(PaymentSaveVm model);
 }
