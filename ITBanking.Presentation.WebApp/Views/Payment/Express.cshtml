@@ -6,7 +6,8 @@
 }
 
 <div class="row">
-  @if (Model.HasError){
+  @if (Model.HasError)
+  {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <p>@Model.Error</p>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -35,7 +36,8 @@
         </div>
         <div class="btn-group col-12">
           <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
-          <button type="submit" class="btn w-25 btn-outline-success w-100">Pay</button>
+          <button type="submit" class="btn w-25 btn-outline-success w-100"
+            onclick="return confirm('Are you sure?')">Pay</button>
         </div>
       </form>
     </div>

@@ -39,7 +39,10 @@
         </div>
         <div class="btn-group col-12">
           <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
-          <button type="submit" class="btn w-25 btn-outline-warning w-100">Pay</button>
+          <button type="submit" class="btn w-25 btn-outline-warning w-100"
+                  onclick="return confirm('Are you sure?')">
+            Pay
+          </button>
         </div>
       </form>
     </div>

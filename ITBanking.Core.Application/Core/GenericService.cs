@@ -15,7 +15,7 @@ public class GenericService<EntityVm, SaveEntityVm, Entity> : IGenericService<En
   }
 
   public virtual async Task<IEnumerable<EntityVm>> GetAll() {
-    var query = from entity in await _repository.GetAll() 
+    var query = from entity in await _repository.GetAll()
                 select _mapper.Map<EntityVm>(entity);
 
     return query.ToList();
@@ -32,11 +32,11 @@ public class GenericService<EntityVm, SaveEntityVm, Entity> : IGenericService<En
   }
 
   public virtual async Task<SaveEntityVm> Save(SaveEntityVm vm) {
-    try{
+    try {
       var entity = _mapper.Map<Entity>(vm);
-    await _repository.Save(entity);
-    return _mapper.Map<SaveEntityVm>(entity);
-    }catch(Exception ex){
+      await _repository.Save(entity);
+      return _mapper.Map<SaveEntityVm>(entity);
+    } catch (Exception ex) {
       vm.HasError = true;
       vm.Error = ex.Message;
       return vm;

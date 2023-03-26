@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ITBanking.Core.Application.Core;
 using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Application.Interfaces;
 
-public interface IPaymentRepository: IGenericRepository<Payment>
-{
-    
+public interface IPaymentRepository : IGenericRepository<Payment> {
+  Task DeleteRange(List<Payment> payments);
 }

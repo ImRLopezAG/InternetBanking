@@ -2,22 +2,19 @@ using ITBanking.Core.Application.Contracts;
 using ITBanking.Core.Application.Dtos.Account;
 using ITBanking.Core.Application.Helpers;
 using ITBanking.Core.Application.ViewModels.SaveVm;
-using ITBanking.Presentation.WebApp.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITBanking.Presentation.WebApp.Controllers;
 
-public class TransferController : Controller
-{
+public class TransferController : Controller {
   private readonly ITransferService _transferService;
   private readonly IProductService _productService;
   private readonly IUserService _userService;
   private readonly IHttpContextAccessor _httpContextAccessor;
   private readonly AuthenticationResponse? _currentUser;
 
-  public TransferController(ITransferService transferService, IProductService productService, IUserService userService, IHttpContextAccessor httpContextAccessor)
-  {
+  public TransferController(ITransferService transferService, IProductService productService, IUserService userService, IHttpContextAccessor httpContextAccessor) {
     _transferService = transferService;
     _productService = productService;
     _userService = userService;
@@ -25,8 +22,7 @@ public class TransferController : Controller
     _currentUser = _httpContextAccessor.HttpContext?.Session.Get<AuthenticationResponse>("user");
   }
 
-  private async Task<TransferSaveVm> Error(TransferSaveVm model, string error)
-  {
+  private async Task<TransferSaveVm> Error(TransferSaveVm model, string error) {
     model.HasError = true;
     model.Error = error;
     model.Products = await _productService.GetAll().ContinueWith(t => t.Result.Where(pd => pd.UserId == _currentUser.Id && pd.TyAccountId == 1));
@@ -40,8 +36,7 @@ public class TransferController : Controller
 
   [Authorize(Roles = "Basic")]
   [HttpPost]
-  public async Task<IActionResult> Index(string AccountNumber)
-  {
+  public async Task<IActionResult> Index(string AccountNumber) {
     var transfer = await _productService.GetAccount(AccountNumber);
     if (transfer != null)
       return RedirectToAction("Create", new { receptor = transfer.AccountNumber });
@@ -50,13 +45,11 @@ public class TransferController : Controller
   }
 
   [Authorize(Roles = "Basic")]
-  public async Task<IActionResult> Create(string receptor)
-  {
+  public async Task<IActionResult> Create(string receptor) {
     var product = await _productService.GetAccount(receptor);
     var items = await _productService.GetAll().ContinueWith(t => t.Result.Where(pd => pd.UserId == _currentUser.Id && pd.TyAccountId == 1));
 
-    return View(new TransferSaveVm()
-    {
+    return View(new TransferSaveVm() {
       HasError = false,
       Products = items,
       ReceptorModel = product
@@ -65,8 +58,7 @@ public class TransferController : Controller
 
   [Authorize(Roles = "Basic")]
   [HttpPost]
-  public async Task<IActionResult> Create(TransferSaveVm model)
-  {
+  public async Task<IActionResult> Create(TransferSaveVm model) {
     if (model.SProductId == model.RProductId)
       return View(await Error(model, "You can't transfer to the same account"));
 

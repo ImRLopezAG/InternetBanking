@@ -29,7 +29,7 @@ public class BeneficiaryService : GenericService<BeneficiaryVm, BeneficiarySaveV
   }
 
   public async override Task<IEnumerable<BeneficiaryVm>> GetAll() {
-    var users =await _userService.GetAll();
+    var users = await _userService.GetAll();
     var products = await _productRepository.GetAll();
 
     var query = from beneficiary in await _beneficiaryRepository.GetAll()

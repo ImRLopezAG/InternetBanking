@@ -4,14 +4,16 @@ using ITBanking.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace ITBanking.Infrastructure.Identity.Migrations {
   [DbContext(typeof(IdentityContext))]
-  partial class IdentityContextModelSnapshot : ModelSnapshot {
-    protected override void BuildModel(ModelBuilder modelBuilder) {
+  [Migration("20230325233211_Identity")]
+  partial class Identity {
+    protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
       modelBuilder
           .HasDefaultSchema("Idt")

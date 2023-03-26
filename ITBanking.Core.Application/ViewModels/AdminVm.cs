@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ITBanking.Core.Application.ViewModels;
 
-public class AdminVm{
+public class AdminVm {
   public int Transfers { get; set; }
   public int Transfer24Hours { get; set; }
 

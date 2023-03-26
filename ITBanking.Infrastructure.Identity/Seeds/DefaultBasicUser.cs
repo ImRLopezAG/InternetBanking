@@ -8,7 +8,7 @@ public static class DefaultBasicUser {
     ApplicationUser defaultUser = new() {
       UserName = "basicUser",
       Email = "basic@email.com",
-      FirstName = "John",
+      FirstName = "Basic",
       LastName = "Doe",
       EmailConfirmed = true,
       PhoneNumberConfirmed = true,

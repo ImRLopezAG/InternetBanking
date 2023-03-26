@@ -1,28 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ITBanking.Core.Application.Contracts;
 using ITBanking.Infrastructure.Identity.Entities;
 using ITBanking.Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace ITBanking.Infrastructure.Identity.Services;
 
-public class RequestService: IRequestService
-{
+public class RequestService : IRequestService {
   private readonly IEmailService _emailService;
   private readonly UserManager<ApplicationUser> _userManager;
 
-  public RequestService(IEmailService emailService, UserManager<ApplicationUser> userManager)
-  {
+  public RequestService(IEmailService emailService, UserManager<ApplicationUser> userManager) {
     _emailService = emailService;
     _userManager = userManager;
   }
 
-  
+
   public async Task<string> SendVerificationEmail(ApplicationUser user, string origin) {
     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

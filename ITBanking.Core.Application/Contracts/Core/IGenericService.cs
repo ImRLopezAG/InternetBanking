@@ -1,5 +1,5 @@
-using ITBanking.Core.Application.Core.Models;
 using ITBanking.Core.Application.Core;
+using ITBanking.Core.Application.Core.Models;
 using ITBanking.Core.Domain.Core;
 
 namespace ITBanking.Core.Application.Contracts.Core;

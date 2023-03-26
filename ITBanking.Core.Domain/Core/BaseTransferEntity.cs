@@ -2,7 +2,7 @@ using ITBanking.Core.Domain.Entities;
 
 namespace ITBanking.Core.Domain.Core;
 
-public class BaseTransferEntity : BaseProductEntity{
+public class BaseTransferEntity : BaseProductEntity {
   public int RProductId { get; set; }
   public int SProductId { get; set; }
 

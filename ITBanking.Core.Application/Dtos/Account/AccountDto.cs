@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ITBanking.Core.Application.Dtos.Account;
 
-public class AccountDto{
-  public  string Id { get; set; } = null!;
+public class AccountDto {
+  public string Id { get; set; } = null!;
   public string UserName { get; set; } = null!;
   public string Email { get; set; } = null!;
   public string FullName { get; set; } = null!;
@@ -16,5 +11,5 @@ public class AccountDto{
   public bool EmailConfirmed { get; set; }
   public int Products { get; set; }
   public string Role { get; set; } = null!;
-  public string  PhoneNumber { get; set; }= null!;
+  public string PhoneNumber { get; set; } = null!;
 }

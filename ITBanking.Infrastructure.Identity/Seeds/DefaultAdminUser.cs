@@ -12,7 +12,7 @@ public static class DefaultAdminUser {
       LastName = "Doe",
       EmailConfirmed = true,
       PhoneNumberConfirmed = true,
-      DNI ="adminUser"
+      DNI = "adminUser"
     };
 
     if (userManager.Users.All(u => u.Id != defaultUser.Id)) {

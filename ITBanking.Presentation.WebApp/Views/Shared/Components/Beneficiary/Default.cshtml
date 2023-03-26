@@ -30,7 +30,7 @@
             <a asp-action="Create" asp-controller="Transfer" asp-route-Receptor="@item.AccountNumber" class="btn btn-outline-primary">Transfer</a>
           </td>
           <td>
-            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
           </td>
         </tr>
       }

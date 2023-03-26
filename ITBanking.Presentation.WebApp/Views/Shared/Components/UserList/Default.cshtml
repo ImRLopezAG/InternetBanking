@@ -57,7 +57,7 @@
           </td>
           <td>
             <a class="btn btn-outline-@(item.EmailConfirmed ==false ?"success" : "danger")" asp-controller="AdminUser" asp-action="ChangeStatus"
-            asp-route-id="@item.Id">@(item.EmailConfirmed ==false ?"Active" : "Desactive")</a>
+            asp-route-id="@item.Id" onclick="return confirm('Are you Sure?')">@(item.EmailConfirmed ==false ?"Active" : "Desactive")</a>
           </td>
         </tr>
       }

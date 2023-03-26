@@ -76,12 +76,12 @@ public class ITBankingContext : DbContext {
       .HasForeignKey(x => x.SProductId)
       .OnDelete(DeleteBehavior.NoAction);
 
-    
-    
+
+
     #endregion
 
     #region Configuration
-    
+
     modelBuilder.Entity<Product>().HasIndex(x => x.AccountNumber).IsUnique();
 
     #endregion
