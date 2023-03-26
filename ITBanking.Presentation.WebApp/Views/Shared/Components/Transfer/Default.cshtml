@@ -1,0 +1,42 @@
+﻿@using ITBanking.Core.Application.ViewModels
+@model IEnumerable<TransferVm>
+
+
+<div class="row">
+    <table class="table table-dark table-striped table-hover text-center">
+        <thead class="text-center">
+            <tr>
+                <th>
+                    Receptor
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

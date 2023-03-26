@@ -1,0 +1,50 @@
+@using ITBanking.Core.Application.ViewModels.SaveVm
+@model PaymentSaveVm
+
+@{
+  ViewData["Title"] = "Loans Express";
+}
+
+<div class="row">
+  @if (Model.HasError) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <p>@Model.Error</p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
+  <div class="card px-0">
+    <div class="card-header bg-warning">
+      <h4 class="text-white text-center">Loans Express</h4>
+    </div>
+    <div class="card-body">
+      <form asp-action="Loans">
+        <div class="mb-3">
+          <select class="form-select" asp-for="SProductId">
+            <option selected>Select your product...</option>
+            @foreach (var item in Model.Saving) {
+              <option value="@item.Id">@item.AccountNumber</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" asp-for="RProductId">
+            <option selected>Select your Loan...</option>
+            @foreach (var item in Model.Loans) {
+              <option value="@item.Id">@item.AccountNumber</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Amount" asp-for="Amount">
+        </div>
+        <div class="btn-group col-12">
+          <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary w-100">Back</a>
+          <button type="submit" class="btn w-25 btn-outline-warning w-100"
+                  onclick="return confirm('Are you sure?')">
+            Pay
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

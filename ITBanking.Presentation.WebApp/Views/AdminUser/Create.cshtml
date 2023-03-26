@@ -1,0 +1,113 @@
+﻿@model ITBanking.Core.Application.ViewModels.SaveVm.SaveUserVm
+@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@{
+  ViewData["Title"] = "Home Page";
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+@{
+  ViewData["Title"] = "Sign Up";
+}
+
+<h1>Sign Up</h1>
+
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    @if (Model.HasError)
+    {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p>@Model.Error</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    }
+    <form asp-action="Create">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label">First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label">Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label">Phone </label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="DNI" class="control-label"></label>
+        <input asp-for="DNI" class="form-control" />
+        <span asp-validation-for="DNI" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="UserName" class="control-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+      </div>
+      <div class="form-group mb-3">
+        <label asp-for="ConfirmPassword" class="control-label"> Confirm Password</label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+      </div>
+
+      <div class="form-group mb-3">
+        <label asp-for="Role" class="control-label"></label>
+        <select asp-for="Role" class="form-control">
+          <option value="2">Admin</option>
+          <option value="3">Basic</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+      </div>
+
+      <div id="MainAmount">
+      </div>
+      <div>
+        <div class="float-start">
+          <a asp-action="Index" class="btn btn-primary">Back</a>
+        </div>
+        <div class="form-group float-end">
+          <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+<script>
+  const role = document.getElementById("Role");
+  const mainAmount = document.getElementById("MainAmount");
+  const amount = document.createElement("div");
+  role.addEventListener("change", (e) => {
+    if (e.target.value == 3) {
+      amount.innerHTML = `<div class="form-group mb-3">
+            <label name="Amount" class="control-label">Amount</label>
+                <input name="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>`;
+      mainAmount.appendChild(amount);
+    } else {
+      mainAmount.removeChild(amount);
+    }
+  });
+</script>
+}

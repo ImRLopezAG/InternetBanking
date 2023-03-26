@@ -1,8 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@{
+  ViewData["Title"] = "Home Page";
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-3 font-monospace">Welcome @user.UserName</h1>
+    @if (user != null && !user.Roles.Where(x => x.ToString() == "Admin").Any()){
+      <a asp-controller="Transfer" asp-action="Index" class="btn btn-outline-primary">New Transfer</a>
+    }
+  </div>
+  <hr>
+  @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any()){
+    @await Component.InvokeAsync("AdminList")
+  }else{
+    @await Component.InvokeAsync("Product")
+  }
 </div>

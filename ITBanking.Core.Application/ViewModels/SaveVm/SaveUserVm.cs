@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace ITBanking.Core.Application.ViewModels.SaveVm;
@@ -16,6 +15,7 @@ public class SaveUserVm : SavePersonVm {
   [Compare("Password", ErrorMessage = "Password and Confirm Password must match")]
   [DataType(DataType.Password)]
   public string ConfirmPassword { get; set; } = null!;
-  public bool HasError { get; set; }
-  public string? Error { get; set; }
+  public int Role { get; set; }
+  public double? Amount { get; set; }
+
 }

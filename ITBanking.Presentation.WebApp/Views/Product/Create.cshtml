@@ -1,0 +1,78 @@
+@using ITBanking.Core.Application.ViewModels.SaveVm
+@model ProductSaveVm
+
+@{
+    ViewData["Title"] = "Create Products";
+}
+
+<h2>Create</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.HasError) {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <p>@Model.Error</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="UserId" class="form-label">User</label>
+                <select asp-for="UserId" class="form-select">
+                    <option selected>Select User</option>
+                    @foreach (var item in Model.Users) {
+                        <option value="@item.Id">@item.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TyAccountId" class="form-label">Product Type</label>
+                <select asp-for="TyAccountId" class="form-select">
+                    <option selected>Select Product Type</option>
+                    <option value="1">Saving</option>
+                    <option value="2">Credict</option>
+                    <option value="3">Loans</option>
+                </select>
+            </div>
+                <div class="mb-3">
+                    <label id="p-label" asp-for="Amount" class="form-label">Amount</label>
+                    <input id="p-input" type="number" asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+            
+            <div class="mb-3 col-12 btn-group">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-warning">Back</a>
+                <button type="submit" class="btn btn-outline-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+}
+
+<script>
+    const tyAccountId = document.getElementById('TyAccountId');
+    const pLabel = document.getElementById('p-label');
+    const pInput = document.getElementById('p-input');
+
+    tyAccountId.addEventListener('change', (e) => {
+        if (e.target.value == 1) {
+            pLabel.innerHTML = 'Amount';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Amount')
+        } else if (e.target.value == 2) {
+            pLabel.innerHTML = 'Credit Limit';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Limit')
+        } else if (e.target.value == 3) {
+            pLabel.innerHTML = 'Loan Amount';
+            pInput.setAttribute('type', 'number')
+            pInput.setAttribute('name', 'Amount')
+        }
+    });
+    
+</script>

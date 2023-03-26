@@ -14,18 +14,16 @@ public class GenericService<EntityVm, SaveEntityVm, Entity> : IGenericService<En
     _mapper = mapper;
   }
 
-  public virtual async Task<ServiceResult> GetAll() {
-    ServiceResult result = new();
-    try {
-      var query = from entity in await _repository.GetAll()
-                  select _mapper.Map<EntityVm>(entity);
+  public virtual async Task<IEnumerable<EntityVm>> GetAll() {
+    var query = from entity in await _repository.GetAll()
+                select _mapper.Map<EntityVm>(entity);
 
-      result.Data = query;
-    } catch (Exception ex) {
-      result.Success = false;
-      result.Message = ex.Message;
-    }
-    return result;
+    return query.ToList();
+  }
+
+  public virtual async Task<EntityVm> GetById(int id) {
+    var entity = await _repository.GetEntity(id);
+    return _mapper.Map<EntityVm>(entity);
   }
 
   public virtual async Task<SaveEntityVm> GetEntity(int id) {
@@ -33,38 +31,29 @@ public class GenericService<EntityVm, SaveEntityVm, Entity> : IGenericService<En
     return _mapper.Map<SaveEntityVm>(entity);
   }
 
-  public virtual async Task<ServiceResult> GetById(int id) {
-    ServiceResult result = new();
-    try {
-      var entity = await _repository.GetEntity(id);
-      result.Data = _mapper.Map<EntityVm>(entity);
-    } catch (Exception ex) {
-      result.Success = false;
-      result.Message = ex.Message;
-    }
-    return result;
-  }
   public virtual async Task<SaveEntityVm> Save(SaveEntityVm vm) {
-    var entity = _mapper.Map<Entity>(vm);
-    await _repository.Save(entity);
-    return _mapper.Map<SaveEntityVm>(entity);
+    try {
+      var entity = _mapper.Map<Entity>(vm);
+      await _repository.Save(entity);
+      return _mapper.Map<SaveEntityVm>(entity);
+    } catch (Exception ex) {
+      vm.HasError = true;
+      vm.Error = ex.Message;
+      return vm;
+    }
   }
 
   public virtual async Task Edit(SaveEntityVm vm) {
-    try {
-      if (_repository.GetEntity(vm.Id) != null) {
-        var entity = _mapper.Map<Entity>(vm);
-        await _repository.Update(entity);
-      }
-
-    } catch {
-      throw;
-    }
+    var entity = _mapper.Map<Entity>(vm);
+    await _repository.Update(entity);
   }
 
   public virtual async Task Delete(int id) {
-    var entity = await _repository.GetEntity(id);
-    await _repository.Delete(entity);
+    try {
+      var entity = await _repository.GetEntity(id);
+      await _repository.Delete(entity);
+    } catch (Exception ex) {
+      throw new Exception(ex.Message);
+    }
   }
 }
-

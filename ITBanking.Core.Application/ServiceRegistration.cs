@@ -14,6 +14,10 @@ public static class ServiceRegistration {
     #region Services
     services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
     services.AddTransient<IUserService, UserService>();
+    services.AddTransient<IProductService, ProductService>();
+    services.AddTransient<IPaymentService, PaymentService>();
+    services.AddTransient<IBeneficiaryService, BeneficiaryService>();
+    services.AddTransient<ITransferService, TransferService>();
     #endregion
   }
 }

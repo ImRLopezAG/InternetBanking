@@ -8,192 +8,231 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ITBanking.Infrastructure.Persistence.Migrations
-{
-    [DbContext(typeof(ITBankingContext))]
-    partial class ITBankingContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
+namespace ITBanking.Infrastructure.Persistence.Migrations {
+  [DbContext(typeof(ITBankingContext))]
+  partial class ITBankingContextModelSnapshot : ModelSnapshot {
+    protected override void BuildModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "6.0.14")
+          .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+      SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Beneficiary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Beneficiary", b => {
+        b.Property<int>("Id")
+            .ValueGeneratedOnAdd()
+            .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+        SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+        b.Property<DateTime>("CreatedAt")
+            .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime2");
+        b.Property<DateTime>("LastModifiedAt")
+            .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+        b.Property<int>("ProductId")
+            .HasColumnType("int");
 
-                    b.HasKey("Id");
+        b.Property<string>("Receptor")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ProductId");
+        b.Property<string>("Sender")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Beneficiaries", (string)null);
-                });
+        b.HasKey("Id");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Card", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        b.HasIndex("ProductId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+        b.ToTable("Beneficiaries", ( string )null);
+      });
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b => {
+        b.Property<int>("Id")
+            .ValueGeneratedOnAdd()
+            .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+        SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool?>("HasLimit")
-                        .HasColumnType("bit");
+        b.Property<double>("Amount")
+            .HasColumnType("float");
 
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime2");
+        b.Property<DateTime>("CreatedAt")
+            .HasColumnType("datetime2");
 
-                    b.Property<double?>("Limit")
-                        .HasColumnType("float");
+        b.Property<DateTime>("LastModifiedAt")
+            .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+        b.Property<int>("RProductId")
+            .HasColumnType("int");
 
-                    b.HasKey("Id");
+        b.Property<string>("Receptor")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+        b.Property<int>("SProductId")
+            .HasColumnType("int");
 
-                    b.ToTable("Cards", (string)null);
-                });
+        b.Property<string>("Sender")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        b.HasKey("Id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+        b.HasIndex("RProductId");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+        b.HasIndex("SProductId");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+        b.ToTable("Payments", ( string )null);
+      });
 
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime2");
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b => {
+        b.Property<int>("Id")
+            .ValueGeneratedOnAdd()
+            .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+        SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ReceptorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+        b.Property<string>("AccountNumber")
+            .IsRequired()
+            .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+        b.Property<double>("Amount")
+            .HasColumnType("float");
 
-                    b.HasKey("Id");
+        b.Property<DateTime>("CreatedAt")
+            .HasColumnType("datetime2");
 
-                    b.HasIndex("ProductId");
+        b.Property<double?>("Dbt")
+            .HasColumnType("float");
 
-                    b.ToTable("Payments", (string)null);
-                });
+        b.Property<bool?>("HasLimit")
+            .HasColumnType("bit");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        b.Property<bool>("IsPrincipal")
+            .HasColumnType("bit");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+        b.Property<DateTime>("LastModifiedAt")
+            .HasColumnType("datetime2");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+        b.Property<double?>("Limit")
+            .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+        b.Property<int>("TyAccountId")
+            .HasColumnType("int");
 
-                    b.Property<bool>("IsPrincipal")
-                        .HasColumnType("bit");
+        b.Property<string>("UserId")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime2");
+        b.HasKey("Id");
 
-                    b.Property<string>("NAccountId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+        b.HasIndex("AccountNumber")
+            .IsUnique();
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+        b.ToTable("Products", ( string )null);
+      });
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Transfer", b => {
+        b.Property<int>("Id")
+            .ValueGeneratedOnAdd()
+            .HasColumnType("int");
 
-                    b.HasKey("Id");
+        SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.ToTable("Products", (string)null);
-                });
+        b.Property<double>("Amount")
+            .HasColumnType("float");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Beneficiary", b =>
-                {
-                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
-                        .WithMany("Beneficiaries")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        b.Property<DateTime>("CreatedAt")
+            .HasColumnType("datetime2");
 
-                    b.Navigation("Product");
-                });
+        b.Property<DateTime>("LastModifiedAt")
+            .HasColumnType("datetime2");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Card", b =>
-                {
-                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
-                        .WithOne("Card")
-                        .HasForeignKey("ITBanking.Core.Domain.Entities.Card", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        b.Property<int>("RProductId")
+            .HasColumnType("int");
 
-                    b.Navigation("Product");
-                });
+        b.Property<string>("Receptor")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b =>
-                {
-                    b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
-                        .WithMany("Payments")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        b.Property<int>("SProductId")
+            .HasColumnType("int");
 
-                    b.Navigation("Product");
-                });
+        b.Property<string>("Sender")
+            .IsRequired()
+            .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b =>
-                {
-                    b.Navigation("Beneficiaries");
+        b.HasKey("Id");
 
-                    b.Navigation("Card");
+        b.HasIndex("RProductId");
 
-                    b.Navigation("Payments");
-                });
+        b.HasIndex("SProductId");
+
+        b.ToTable("Transfers", ( string )null);
+      });
+
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Beneficiary", b => {
+        b.HasOne("ITBanking.Core.Domain.Entities.Product", "Product")
+            .WithMany("Beneficiaries")
+            .HasForeignKey("ProductId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        b.Navigation("Product");
+      });
+
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Payment", b => {
+        b.HasOne("ITBanking.Core.Domain.Entities.Product", "RProduct")
+            .WithMany("RPayments")
+            .HasForeignKey("RProductId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        b.HasOne("ITBanking.Core.Domain.Entities.Product", "SProduct")
+            .WithMany("SPayments")
+            .HasForeignKey("SProductId")
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+
+        b.Navigation("RProduct");
+
+        b.Navigation("SProduct");
+      });
+
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Transfer", b => {
+        b.HasOne("ITBanking.Core.Domain.Entities.Product", "RProduct")
+            .WithMany("RTransfers")
+            .HasForeignKey("RProductId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        b.HasOne("ITBanking.Core.Domain.Entities.Product", "SProduct")
+            .WithMany("STransfers")
+            .HasForeignKey("SProductId")
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+
+        b.Navigation("RProduct");
+
+        b.Navigation("SProduct");
+      });
+
+      modelBuilder.Entity("ITBanking.Core.Domain.Entities.Product", b => {
+        b.Navigation("Beneficiaries");
+
+        b.Navigation("RPayments");
+
+        b.Navigation("RTransfers");
+
+        b.Navigation("SPayments");
+
+        b.Navigation("STransfers");
+      });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

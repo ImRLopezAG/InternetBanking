@@ -2,8 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ITBanking.Core.Application.ViewModels.User;
 
-public class LoginVm : ValidationVm
-{
+public class LoginVm : ValidationVm {
   [Required(ErrorMessage = "The email is required")]
   [DataType(DataType.Text)]
   public string Email { get; set; } = null!;

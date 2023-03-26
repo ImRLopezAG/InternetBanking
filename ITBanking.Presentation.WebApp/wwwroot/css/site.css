@@ -16,3 +16,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.row table tbody {
+  display: block;
+  overflow : auto;
+  max-height: 350px;
+}
+
+/* Hide scrollbar */
+.row table tbody::-webkit-scrollbar {
+  display: none;
+}
+
+.row table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}

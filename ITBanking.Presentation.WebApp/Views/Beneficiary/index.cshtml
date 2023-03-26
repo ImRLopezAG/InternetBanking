@@ -1,0 +1,31 @@
+@using ITBanking.Core.Application.ViewModels
+@model BeneficiaryVm
+
+@{
+  ViewData["Title"] = "Beneficiary";
+}
+
+<div class="row">
+  @if (Model.HasError){
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <p>@Model.Error</p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
+  <div class="d-flex flex-row justify-content-between align-items-center align-content-center">
+    <h1>Beneficiaries</h1>
+    <form method="post" asp-action="Add" asp-controller="Beneficiary" class="d-flex col-md-4  mb-3">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="col-auto me-2">
+        <input class="form-control" type="number" placeholder="Account Number" asp-for="AccountNumber">
+      </div>
+      <div class="col-auto">
+        <input type="submit" value="Add" class="btn btn-outline-primary" />
+      </div>
+    </form>
+  </div>
+  <hr />
+  <div>
+    @await Component.InvokeAsync("Beneficiary")
+  </div>
+</div>

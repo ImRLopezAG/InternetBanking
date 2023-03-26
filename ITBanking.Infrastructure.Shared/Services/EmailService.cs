@@ -10,6 +10,7 @@ namespace ITBanking.Infrastructure.Shared.Services;
 
 public class EmailService : IEmailService {
   private readonly MailSettings _mailSettings;
+
   public EmailService(IOptions<MailSettings> mailSettings) => _mailSettings = mailSettings.Value;
   public async Task SendEmail(EmailRequest request) {
     try {
@@ -33,4 +34,5 @@ public class EmailService : IEmailService {
       throw;
     }
   }
+
 }

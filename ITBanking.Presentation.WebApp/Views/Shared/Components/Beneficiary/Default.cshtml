@@ -1,0 +1,39 @@
+@using ITBanking.Core.Application.ViewModels
+@model IEnumerable<BeneficiaryVm>
+
+<div class="row">
+  <table class="table table-dark table-striped table-hover text-center">
+    <thead class="text-center">
+      <tr>
+        <th>
+          Propetary
+        </th>
+        <th>
+          Account number
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model) {
+        <tr class="tr-success">
+          <td>
+            @Html.DisplayFor(modelItem => item.Name)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+          </td>
+          <td>
+            <a asp-action="Create" asp-controller="Transfer" asp-route-Receptor="@item.AccountNumber" class="btn btn-outline-primary">Transfer</a>
+          </td>
+          <td>
+            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,31 +1,133 @@
-﻿<!DOCTYPE html>
+﻿@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@{
+  AuthenticationResponse? user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+
+}
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - ITBanking</title>
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/ITBanking.Presentation.WebApp.styles.css" asp-append-version="true" />
+
 </head>
+
 <body>
   <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-      <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ITBanking</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-          <ul class="navbar-nav flex-grow-1">
+    <nav class="navbar navbar-dark bg-dark mb-4">
+      <div class="container-fluid d-flex">
+        <a class="navbar-brand" asp-action="Index" asp-controller="@(user!=null? "Home":"User")">ITBanking</a>
+        @if (user != null && user.Roles.Where(x => x.ToString() == "Admin").Any())
+        {
+          <ul class="navbar-nav gap-3 d-flex flex-row flex-grow-1">
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+              <a class="nav-link text" asp-action="Index" asp-controller="Transfer">Transfers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+              <a class="nav-link text" asp-action="Index" asp-controller="Payment">Payments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text" asp-action="Index" asp-controller="Product">Products</a>
             </li>
           </ul>
+        }
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header bg-dark text-white">
+            @if (user != null)
+            {
+              <div class="d-flex flex-row gap-3 align-items-center">
+                <h5 class="text-white"><i class="bi bi-at"></i>@user.UserName</h5>
+              </div>
+            }
+            else
+            {
+              <h4 class="text-white">ITBanking</h4>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body bg-dark">
+            @if (user != null)
+            {
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" asp-action="Index" asp-controller="Home">Home</a>
+                </li>
+                @if (!user.Roles.Where(x => x.ToString() == "Admin").Any())
+                {
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                      Payments
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" asp-action="Express" asp-controller="Payment">
+                          Express
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" asp-action="CreditCard" asp-controller="Payment">
+                          Credit Card
+                        </a>
+                      </li>
+                      <hr class="dropdown-divider">
+                      <li>
+                        <a class="dropdown-item" asp-action="Loans" asp-controller="Payment">
+                          Loan
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" asp-action="Beneficiary" asp-controller="Payment">
+                          Beneficiary
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="Beneficiary">Beneficiaries</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" asp-action="CashAdvance" asp-controller="Payment">Cash advance</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="Payment">Payment History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" asp-action="Index" asp-controller="Transfer">Transfer</a>
+                  </li>
+                }
+                else
+                {
+                  <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="AdminUser">Users</a>
+                  </li>
+                }
+              </ul>
+            }
+            <div class="d-flex flex-column">
+              @if (user != null)
+              {
+                <a class="btn btn-outline-danger mt-3" asp-action="Logout" asp-controller="User">Logout</a>
+              }
+              else
+              {
+                <div class="">
+                  <a class="btn btn-outline-primary " asp-action="Index" asp-controller="User">Login</a>
+                  <a class="btn btn-outline-primary" asp-action="Create" asp-controller="User">Register</a>
+                </div>
+              }
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -36,14 +138,10 @@
     </main>
   </div>
 
-  <footer class="border-top footer text-muted">
-    <div class="container">
-      &copy; 2023 - ITBanking.Presentation.WebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-  </footer>
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

@@ -29,11 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITBanking.Core.Domain", "IT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITBanking.Infrastructure.Identity", "ITBanking.Infrastructure.Identity\ITBanking.Infrastructure.Identity.csproj", "{B0519673-44F2-457D-A762-256384B26A58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITBanking.Infrastructure.Persistence", "ITBanking.Infrastructure.Persistence\ITBanking.Infrastructure.Persistence.csproj", "{CB22915B-48E0-4DEB-B8CE-3DEAFF5C0591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITBanking.Infrastructure.Persistence", "ITBanking.Infrastructure.Persistence\ITBanking.Infrastructure.Persistence.csproj", "{CB22915B-48E0-4DEB-B8CE-3DEAFF5C0591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITBanking.Infrastructure.Shared", "ITBanking.Infrastructure.Shared\ITBanking.Infrastructure.Shared.csproj", "{591DC8BA-4761-431A-92D1-7B0410D81897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITBanking.Infrastructure.Shared", "ITBanking.Infrastructure.Shared\ITBanking.Infrastructure.Shared.csproj", "{591DC8BA-4761-431A-92D1-7B0410D81897}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITBanking.Presentation.WebApp", "ITBanking.Presentation.WebApp\ITBanking.Presentation.WebApp.csproj", "{B8F16D86-A11C-42A5-B54E-FF41B3872BB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITBanking.Presentation.WebApp", "ITBanking.Presentation.WebApp\ITBanking.Presentation.WebApp.csproj", "{B8F16D86-A11C-42A5-B54E-FF41B3872BB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

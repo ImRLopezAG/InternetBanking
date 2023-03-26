@@ -1,0 +1,18 @@
+@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@model AccountDto
+@{
+  ViewData["Title"] = "Users";
+  AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+<div class="row">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-3 font-monospace">Welcome @user.UserName</h1>
+    <a asp-action="Create" class="btn btn-outline-primary">Create</a>
+  </div>
+  <hr />
+  @await Component.InvokeAsync("UserList")
+</div>

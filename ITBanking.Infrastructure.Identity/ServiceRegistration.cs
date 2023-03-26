@@ -1,5 +1,6 @@
 using ITBanking.Core.Application.Contracts;
 using ITBanking.Infrastructure.Identity.Entities;
+using ITBanking.Infrastructure.Identity.Interfaces;
 using ITBanking.Infrastructure.Identity.Services;
 using ITBanking.Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,7 @@ public static class ServiceRegistration {
 
     #region Services
     services.AddTransient<IAccountService, AccountService>();
+    services.AddTransient<IRequestService, RequestService>();
     #endregion
   }
 }

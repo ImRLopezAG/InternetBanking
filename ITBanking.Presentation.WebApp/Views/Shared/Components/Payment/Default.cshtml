@@ -1,0 +1,62 @@
+@using ITBanking.Core.Application.ViewModels
+@using ITBanking.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http;
+@using ITBanking.Core.Application.Helpers;
+@inject IHttpContextAccessor _httpContext;
+@model IEnumerable<PaymentVm>
+@{
+  AuthenticationResponse? user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+
+<div class="row">
+  <table class="table table-dark table-striped table-hover text-center">
+    <thead class="text-center">
+      <tr>
+        @if(user != null && user.Roles.Any(x => x == "Admin"))
+        {
+          <th>
+            Name
+          </th>
+        }
+        <th>
+          Product
+        </th>
+        <th>
+          Type
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+          Date
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr>
+          @if (user != null && user.Roles.Any(x => x == "Admin"))
+          {
+            <td>
+              @Html.DisplayFor(modelItem => item.Name)
+            </td>
+          }
+          <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Type)
+          </td>
+          <td>
+            <span>$@item.Amount.ToString("N2")</span>
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
